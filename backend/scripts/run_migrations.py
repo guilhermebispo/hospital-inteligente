@@ -32,7 +32,7 @@ def ensure_schema_table(conn: psycopg.Connection) -> None:
 
 
 def migration_version(path: Path) -> tuple[str, str]:
-    name = path.stem  # V1.0.0_001__Criacao_Tabela_Usuario
+    name = path.stem  # V1.0.0_001__Create_Users_Table
     prefix, description = name.split("__", 1)
     return prefix, description.replace("_", " ")
 

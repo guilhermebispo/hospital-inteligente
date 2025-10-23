@@ -87,8 +87,8 @@
     },
     "roles": {
       "ADMIN": "Administrador",
-      "MEDICO": "Médico",
-      "PACIENTE": "Paciente"
+      "DOCTOR": "Médico",
+      "PATIENT": "Paciente"
     },
     "dialog": {
       "createTitle": "CADASTRAR USUÁRIO",

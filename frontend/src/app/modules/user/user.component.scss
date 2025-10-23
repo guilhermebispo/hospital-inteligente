@@ -1,17 +1,17 @@
-.usuario-container {
+.user-container {
   max-width: 1300px;
   margin: 2rem auto;
   padding: 0 3rem;
   position: relative;
 
-  .titulo-pagina {
+  .page-title {
     font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
     color: #333333;
   }
 
-  .filtros {
+  .filters {
     display: flex;
     gap: 1rem;
     margin-bottom: 0.5rem;
@@ -50,13 +50,13 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   }
 
-  .usuario-cards {
+  .user-cards {
     display: none;
     gap: 1rem;
     margin-top: 1rem;
   }
 
-  .usuario-card {
+  .user-card {
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -113,7 +113,7 @@
   }
 }
 
-.novo-usuario-btn {
+.new-user-btn {
   position: fixed;
   right: 2rem;
   bottom: 5rem;
@@ -122,10 +122,10 @@
 }
 
 @media (max-width: 1024px) {
-  .usuario-container {
+  .user-container {
     padding: 0 1.75rem;
 
-    .filtros {
+    .filters {
       flex-wrap: wrap;
 
       mat-form-field {
@@ -143,10 +143,10 @@
 }
 
 @media (max-width: 768px) {
-  .usuario-container {
+  .user-container {
     padding: 0 1.25rem;
 
-    .filtros {
+    .filters {
       gap: 0.75rem;
 
       mat-form-field {
@@ -158,19 +158,19 @@
       display: none;
     }
 
-    .usuario-cards {
+    .user-cards {
       display: flex;
       flex-direction: column;
     }
   }
 
-  .usuario-container mat-paginator {
+  .user-container mat-paginator {
     margin-top: 0.75rem;
     width: 100%;
     border-radius: 12px;
   }
 
-  .novo-usuario-btn {
+  .new-user-btn {
     right: 1.25rem;
     bottom: 4rem;
   }

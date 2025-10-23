@@ -1,22 +1,22 @@
-from app.schemas.auth import Credenciais
-from app.schemas.common import ApiError, ApiErrorDetail, Dominio, PageResponse
-from app.schemas.usuario import (
-    UsuarioCreate,
-    UsuarioOut,
-    UsuarioPerfilUpdate,
-    UsuarioSenhaUpdate,
-    UsuarioUpdate,
+from app.schemas.auth import Credentials
+from app.schemas.common import ApiError, ApiErrorDetail, Domain, PageResponse
+from app.schemas.user import (
+    UserCreate,
+    UserOut,
+    UserPasswordUpdate,
+    UserRoleUpdate,
+    UserUpdate,
 )
 
 __all__ = [
     "ApiError",
     "ApiErrorDetail",
-    "Dominio",
+    "Domain",
     "PageResponse",
-    "UsuarioCreate",
-    "UsuarioOut",
-    "UsuarioPerfilUpdate",
-    "UsuarioSenhaUpdate",
-    "UsuarioUpdate",
-    "Credenciais",
+    "UserCreate",
+    "UserOut",
+    "UserRoleUpdate",
+    "UserPasswordUpdate",
+    "UserUpdate",
+    "Credentials",
 ]

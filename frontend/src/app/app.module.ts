@@ -30,14 +30,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './layout/login/login.component';
 import { NavComponent } from './layout/nav/nav.component';
 import { HomeComponent } from './modules/home/home.component';
-import { UsuarioFormComponent } from './modules/usuario/usuario-form/usuario-form.component';
-import { UsuarioComponent } from './modules/usuario/usuario.component';
+import { UserFormComponent } from './modules/user/user-form/user-form.component';
+import { UserComponent } from './modules/user/user.component';
 import { AuthInterceptorProvider } from './security/auth.interceptor';
 import { DialogFormComponent } from './layout/dialog/form-dialog/dialog-form.component';
 import { DialogConfirmComponent } from './layout/dialog/confirm-dialog/dialog-confirm.component';
-import { MatPaginatorBrService } from './services/mat-paginator-br.service';
-import { SenhaFormComponent } from './layout/nav/senha-form/senha-form.component';
-import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.component';
+import { CustomMatPaginatorService } from './services/custom-mat-paginator.service';
+import { PasswordFormComponent } from './layout/nav/password-form/password-form.component';
+import { RoleFormComponent } from './modules/user/role-form/role-form.component';
 
 @NgModule({
   declarations: [
@@ -45,10 +45,10 @@ import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.c
     NavComponent,
     HomeComponent,
     LoginComponent,
-    UsuarioComponent,
-    UsuarioFormComponent,
-    PerfilFormComponent,
-    SenhaFormComponent,
+    UserComponent,
+    UserFormComponent,
+    RoleFormComponent,
+    PasswordFormComponent,
     DialogFormComponent,
     DialogConfirmComponent
   ],
@@ -102,7 +102,7 @@ import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.c
         suffix: '.json'
       }
     },
-    { provide: MatPaginatorIntl, useClass: MatPaginatorBrService}
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService}
   ],
   bootstrap: [AppComponent]
 })

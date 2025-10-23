@@ -3,15 +3,15 @@ from __future__ import annotations
 from enum import Enum
 
 
-class PerfilEnum(str, Enum):
+class RoleEnum(str, Enum):
     ADMIN = "ADMIN"
-    MEDICO = "MEDICO"
-    PACIENTE = "PACIENTE"
+    DOCTOR = "DOCTOR"
+    PATIENT = "PATIENT"
 
     @property
     def label(self) -> str:
         return {
-            PerfilEnum.ADMIN: "Administrador",
-            PerfilEnum.MEDICO: "Médico",
-            PerfilEnum.PACIENTE: "Paciente",
+            RoleEnum.ADMIN: "Administrator",
+            RoleEnum.DOCTOR: "Doctor",
+            RoleEnum.PATIENT: "Patient",
         }[self]

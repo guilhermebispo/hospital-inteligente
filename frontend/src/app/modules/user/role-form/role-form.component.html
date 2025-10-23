@@ -1,14 +1,14 @@
-<mat-dialog-content class="perfil-form-content">
+<mat-dialog-content class="role-form-content">
   <form [formGroup]="form" class="form-fields">
 
     <mat-form-field appearance="outline">
       <mat-label>{{ 'forms.profile' | translate }}</mat-label>
-      <mat-select formControlName="perfil">
-        <mat-option *ngFor="let s of perfisList" [value]="s.code">
-          {{ ('users.roles.' + s.code) | translate }}
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let option of roles" [value]="option.code">
+          {{ ('users.roles.' + option.code) | translate }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('perfil')?.hasError('required')">
+      <mat-error *ngIf="form.get('role')?.hasError('required')">
         {{ 'forms.validation.profileRequired' | translate }}
       </mat-error>
     </mat-form-field>

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Credencial } from '../../models/credencial';
+import { Credential } from '../../models/credential';
 import { AuthService } from '../../security/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     this.currentLanguage = this.resolveCurrentLanguage();
@@ -57,13 +57,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.langChangeSub?.unsubscribe();
   }
 
-  logar(): void {
+  login(): void {
     if (this.loginForm.invalid) {
       this.toast.warning(this.translate.instant('login.messages.fillFields'));
       return;
     }
 
-    const creds: Credencial = this.loginForm.value;
+    const creds: Credential = this.loginForm.value;
 
     this.service.authenticate(creds).subscribe({
       next: (resposta: HttpResponse<any>) => {
@@ -95,8 +95,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('email');
   }
 
-  get senha() {
-    return this.loginForm.get('senha');
+  get password() {
+    return this.loginForm.get('password');
   }
 
   validaCampos(): boolean {

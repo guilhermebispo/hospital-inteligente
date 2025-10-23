@@ -1,32 +1,32 @@
-<div class="container" [class.menu-open]="menuAberto">
-  <nav class="sidenav" [class.open]="menuAberto">
+<div class="container" [class.menu-open]="menuOpen">
+  <nav class="sidenav" [class.open]="menuOpen">
     <button mat-icon-button class="close-button" (click)="closeMenu()" [attr.aria-label]="'nav.toggleClose' | translate">
       <mat-icon>close</mat-icon>
     </button>
-    <div class="mobile-user" *ngIf="usuario">
+    <div class="mobile-user" *ngIf="userName">
       <div class="mobile-user__info">
-        <span class="mobile-user__name">{{ usuario }}</span>
-        <span class="mobile-user__role">{{ role }}</span>
+        <span class="mobile-user__name">{{ userName }}</span>
+        <span class="mobile-user__role">{{ userRoleLabel }}</span>
       </div>
     </div>
     <a routerLink="home" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
       <mat-icon>home</mat-icon>
       <span>{{ 'nav.menu.home' | translate }}</span>
     </a>
-    <a routerLink="usuarios" routerLinkActive="active" class="nav-link" *ngIf="perfil == 'ADMIN'" (click)="closeMenu()">
+    <a routerLink="users" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode == 'ADMIN'" (click)="closeMenu()">
       <mat-icon>person</mat-icon>
       <span>{{ 'nav.menu.users' | translate }}</span>
     </a>
 
     <div class="sidenav-footer">
-      <span class="footer-text">{{ 'app.footer' | translate }}</span>
       <button mat-icon-button class="language-button" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">
         <img class="language-flag" [src]="currentLanguageFlag" [alt]="('app.language.' + currentLanguage) | translate">
       </button>
+      <span class="footer-text">{{ 'app.footer' | translate }}</span>
     </div>
   </nav>
 
-  <div class="backdrop" *ngIf="menuAberto" (click)="closeMenu()"></div>
+  <div class="backdrop" *ngIf="menuOpen" (click)="closeMenu()"></div>
 
   <div class="sidenav-content">
     <header class="header">
@@ -40,15 +40,15 @@
 
       <div class="header-right">
         <div class="user-info">
-          <span class="user-name">{{ usuario }}</span>
-          <span class="user-role">{{ role }}</span>
+          <span class="user-name">{{ userName }}</span>
+          <span class="user-role">{{ userRoleLabel }}</span>
         </div>
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
           <mat-icon>account_circle</mat-icon>
         </button>
       </div>
       <mat-menu #userMenu="matMenu" class="custom-menu">
-        <button mat-menu-item (click)="alterarSenha()">
+        <button mat-menu-item (click)="changePassword()">
           <mat-icon>key</mat-icon>
           <span>{{ 'nav.menu.changePassword' | translate }}</span>
         </button>

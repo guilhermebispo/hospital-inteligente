@@ -36,6 +36,6 @@ class PageResponse(GenericModel, Generic[T]):
     last: bool
 
 
-class Dominio(BaseModel):
+class Domain(BaseModel):
     code: str
     label: str

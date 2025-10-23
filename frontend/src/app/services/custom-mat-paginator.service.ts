@@ -3,7 +3,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
-export class MatPaginatorBrService extends MatPaginatorIntl {
+export class CustomMatPaginatorService extends MatPaginatorIntl {
   constructor(private translateService: TranslateService) {
     super();
     this.translateService.onLangChange.subscribe(() => this.updateLabels());

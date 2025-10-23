@@ -7,155 +7,155 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.dependencies import get_db
-from app.models.enums import PerfilEnum
+from app.models.enums import RoleEnum
 from app.schemas.common import PageResponse
-from app.schemas.usuario import (
-    UsuarioCreate,
-    UsuarioOut,
-    UsuarioPerfilUpdate,
-    UsuarioSenhaUpdate,
-    UsuarioUpdate,
+from app.schemas.user import (
+    UserCreate,
+    UserOut,
+    UserPasswordUpdate,
+    UserRoleUpdate,
+    UserUpdate,
 )
 from app.security.auth import require_roles
-from app.services import usuario_service
-from app.services.usuario_service import EmailAlreadyInUseError, UsuarioNotFoundError
+from app.services import user_service
+from app.services.user_service import EmailAlreadyInUseError, UserNotFoundError
 from app.utils.pagination import build_page
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-read_permission = require_roles(PerfilEnum.ADMIN, PerfilEnum.MEDICO, PerfilEnum.PACIENTE)
-write_permission = require_roles(PerfilEnum.ADMIN)
+read_permission = require_roles(RoleEnum.ADMIN, RoleEnum.DOCTOR, RoleEnum.PATIENT)
+write_permission = require_roles(RoleEnum.ADMIN)
 
 
-@router.get("", response_model=PageResponse[UsuarioOut])
-def listar(
+@router.get("", response_model=PageResponse[UserOut])
+def list_users(
     page: int = Query(0, ge=0),
     size: int = Query(10, ge=1, le=100),
-    sort: str = Query("nome"),
+    sort: str = Query("name"),
     direction: str = Query("asc"),
-    perfil: Optional[str] = Query(None),
-    texto: Optional[str] = Query(None),
+    role: Optional[str] = Query(None),
+    text: Optional[str] = Query(None),
     db: Session = Depends(get_db),
     _: None = Depends(read_permission),
 ):
-    items, total = usuario_service.list_usuarios(
+    items, total = user_service.list_users(
         db,
         page=page,
         size=size,
-        perfil=perfil,
-        texto=texto,
+        role=role,
+        text=text,
         sort_field=sort,
         sort_direction=direction,
     )
 
-    dtos = [UsuarioOut.model_validate(item) for item in items]
+    dtos = [UserOut.model_validate(item) for item in items]
     return build_page(dtos, total=total, page=page, size=size)
 
 
-@router.get("/{usuario_id}", response_model=UsuarioOut)
-def buscar_por_id(
-    usuario_id: UUID,
+@router.get("/{user_id}", response_model=UserOut)
+def get_by_id(
+    user_id: UUID,
     db: Session = Depends(get_db),
     _: None = Depends(read_permission),
 ):
     try:
-        usuario = usuario_service.get_usuario(db, usuario_id)
-    except UsuarioNotFoundError as exc:
+        user = user_service.get_user(db, user_id)
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.get("/email/{email}", response_model=UsuarioOut)
-def buscar_por_email(
+@router.get("/email/{email}", response_model=UserOut)
+def get_by_email(
     email: str,
     db: Session = Depends(get_db),
     _: None = Depends(read_permission),
 ):
     try:
-        usuario = usuario_service.get_usuario_por_email(db, email)
-    except UsuarioNotFoundError as exc:
+        user = user_service.get_user_by_email(db, email)
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.post("", response_model=UsuarioOut)
-def criar(
-    payload: UsuarioCreate,
+@router.post("", response_model=UserOut)
+def create(
+    payload: UserCreate,
     db: Session = Depends(get_db),
     _: None = Depends(write_permission),
 ):
     try:
-        usuario = usuario_service.criar_usuario(db, payload.model_dump())
+        user = user_service.create_user(db, payload.model_dump())
     except EmailAlreadyInUseError as exc:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.put("/{usuario_id}", response_model=UsuarioOut)
-def atualizar(
-    usuario_id: UUID,
-    payload: UsuarioUpdate,
+@router.put("/{user_id}", response_model=UserOut)
+def update(
+    user_id: UUID,
+    payload: UserUpdate,
     db: Session = Depends(get_db),
     _: None = Depends(write_permission),
 ):
     try:
-        usuario = usuario_service.atualizar_usuario(db, usuario_id, payload.model_dump())
-    except UsuarioNotFoundError as exc:
+        user = user_service.update_user(db, user_id, payload.model_dump())
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
     except EmailAlreadyInUseError as exc:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.patch("/{usuario_id}/perfil", response_model=UsuarioOut)
-def alterar_perfil(
-    usuario_id: UUID,
-    payload: UsuarioPerfilUpdate,
+@router.patch("/{user_id}/role", response_model=UserOut)
+def change_role(
+    user_id: UUID,
+    payload: UserRoleUpdate,
     db: Session = Depends(get_db),
     _: None = Depends(write_permission),
 ):
     try:
-        usuario = usuario_service.alterar_perfil(db, usuario_id, payload.perfil)
-    except UsuarioNotFoundError as exc:
+        user = user_service.change_role(db, user_id, payload.role)
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.patch("/{usuario_id}/senha", response_model=UsuarioOut)
-def alterar_senha(
-    usuario_id: UUID,
-    payload: UsuarioSenhaUpdate,
+@router.patch("/{user_id}/password", response_model=UserOut)
+def change_password(
+    user_id: UUID,
+    payload: UserPasswordUpdate,
     db: Session = Depends(get_db),
     _: None = Depends(write_permission),
 ):
     try:
-        usuario = usuario_service.alterar_senha(db, usuario_id, payload.senha)
-    except UsuarioNotFoundError as exc:
+        user = user_service.change_password(db, user_id, payload.password)
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
-    return UsuarioOut.model_validate(usuario)
+    return UserOut.model_validate(user)
 
 
-@router.delete("/{usuario_id}", status_code=status.HTTP_204_NO_CONTENT)
-def deletar(
-    usuario_id: UUID,
+@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete(
+    user_id: UUID,
     db: Session = Depends(get_db),
     _: None = Depends(write_permission),
 ):
     try:
-        usuario_service.deletar_usuario(db, usuario_id)
-    except UsuarioNotFoundError as exc:
+        user_service.delete_user(db, user_id)
+    except UserNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc

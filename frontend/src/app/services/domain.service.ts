@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Dominio } from '../models/dominio';
+import { Domain } from '../models/domain';
 
-const API = `${environment.baseUrl}/dominios`;
+const API = `${environment.baseUrl}/domains`;
 
 @Injectable({
   providedIn: 'root'
 })
-export class DominioService {
+export class DomainService {
 
   constructor(private http: HttpClient) { }
 
-  buscarPerfis(): Observable<Dominio[]> {
-    return this.http.get<Dominio[]>(`${API}/perfis`);
+  fetchRoles(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(`${API}/roles`);
   }
 }

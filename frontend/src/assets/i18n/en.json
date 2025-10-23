@@ -87,8 +87,8 @@
     },
     "roles": {
       "ADMIN": "Administrator",
-      "MEDICO": "Doctor",
-      "PACIENTE": "Patient"
+      "DOCTOR": "Doctor",
+      "PATIENT": "Patient"
     },
     "dialog": {
       "createTitle": "CREATE USER",

@@ -3,6 +3,6 @@ from __future__ import annotations
 from pydantic import BaseModel, EmailStr
 
 
-class Credenciais(BaseModel):
+class Credentials(BaseModel):
     email: EmailStr
-    senha: str
+    password: str

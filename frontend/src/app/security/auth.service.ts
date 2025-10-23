@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Credencial } from '../models/credencial';
+import { Credential } from '../models/credential';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { UsuarioService } from '../services/usuario.service';
-import { Usuario } from '../models/usuario';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -26,18 +26,18 @@ export class AuthService {
   private jwtService: JwtHelperService = new JwtHelperService();
 
   loggedIn$ = new BehaviorSubject<boolean>(this.isAuthenticated());
-  currentUser$ = new BehaviorSubject<Usuario | null>(null);
+  currentUser$ = new BehaviorSubject<User | null>(null);
 
   constructor(
     private http: HttpClient,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private toastrService: ToastrService,
     private translateService: TranslateService
   ) {
   }
 
-  authenticate(creds: Credencial) {
-    return this.http.post(`${API}/login`, creds, {
+  authenticate(credentials: Credential) {
+    return this.http.post(`${API}/login`, credentials, {
       observe: 'response'
     });
   }
@@ -46,13 +46,15 @@ export class AuthService {
     localStorage.setItem('token', authToken.replace(/^Bearer\s+/i, ''));
     this.loggedIn$.next(true);
 
-    this.usuarioService.buscarPorEmail(this.getUserName()).subscribe({
-      next: (res: Usuario) => {
-        this.currentUser$.next(res);
-      },
-      error: () => {
-        this.toastrService.error(this.translateService.instant('auth.errors.fetchUser'));
-      }
+    const email = this.getUser()?.email || this.getUser()?.sub;
+    if (!email) {
+      this.toastrService.error(this.translateService.instant('auth.errors.fetchUser'));
+      return;
+    }
+
+    this.userService.findByEmail(email).subscribe({
+      next: (user: User) => this.currentUser$.next(user),
+      error: () => this.toastrService.error(this.translateService.instant('auth.errors.fetchUser'))
     });
   }
 
