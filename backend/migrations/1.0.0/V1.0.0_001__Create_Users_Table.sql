@@ -27,8 +27,7 @@ COMMENT ON COLUMN public.users.password IS 'User hashed password';
 COMMENT ON COLUMN public.users.role IS 'User role';
 COMMENT ON COLUMN public.users.created_at IS 'Creation timestamp';
 
-ALTER TABLE public.users OWNER TO hospital_user;
-GRANT ALL ON TABLE public.users TO hospital_user;
+ALTER TABLE public.users OWNER TO CURRENT_USER;
 
 /* Seed data
  * Password: 123456

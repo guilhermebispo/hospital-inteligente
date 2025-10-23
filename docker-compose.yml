@@ -7,25 +7,25 @@ volumes:
   db_data:
 
 services:
-  db:
-    image: postgres:16
-    container_name: hospital_db
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-hospital_db}
-      POSTGRES_USER: ${POSTGRES_USER:-hospital_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hospital_pass}
-    ports:
-      - "5434:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - hospital_net
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hospital_user} -d ${POSTGRES_DB:-hospital_db} -h localhost -p 5432 || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
+  # db:
+  #   image: postgres:16
+  #   container_name: hospital_db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_DB:-hospital_db}
+  #     POSTGRES_USER: ${POSTGRES_USER:-hospital_user}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hospital_pass}
+  #   ports:
+  #     - "5434:5432"
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #   networks:
+  #     - hospital_net
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hospital_user} -d ${POSTGRES_DB:-hospital_db} -h localhost -p 5432 || exit 1"]
+  #     interval: 5s
+  #     timeout: 3s
+  #     retries: 20
 
   migrate:
     build:
@@ -33,10 +33,10 @@ services:
       dockerfile: Dockerfile
     command: ["python", "scripts/run_migrations.py"]
     environment:
-      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-hospital_user}:${POSTGRES_PASSWORD:-hospital_pass}@db:5432/${POSTGRES_DB:-hospital_db}
-    depends_on:
-      db:
-        condition: service_healthy
+      DATABASE_URL: ${DATABASE_URL}
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     networks:
       - hospital_net
 
@@ -47,12 +47,12 @@ services:
     container_name: hospital_api
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-hospital_user}:${POSTGRES_PASSWORD:-hospital_pass}@db:5432/${POSTGRES_DB:-hospital_db}
-      JWT_SECRET: \${JWT_SECRET:-L9k9M9W9bQXdd6cojXruU2pZTd7rsiAjpCB}
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET:-L9k9M9W9bQXdd6cojXruU2pZTd7rsiAjpCB}
       PORT: 8080
     depends_on:
-      db:
-        condition: service_healthy
+      # db:
+      #   condition: service_healthy
       migrate:
         condition: service_completed_successfully
     ports:
