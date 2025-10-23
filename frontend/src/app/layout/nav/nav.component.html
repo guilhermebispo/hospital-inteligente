@@ -19,7 +19,10 @@
     </a>
 
     <div class="sidenav-footer">
-      {{ 'app.footer' | translate }}
+      <button mat-icon-button class="language-button" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">
+        <img class="language-flag" [src]="currentLanguageFlag" [alt]="('app.language.' + currentLanguage) | translate">
+      </button>
+      <span>{{ 'app.footer' | translate }}</span>
     </div>
   </nav>
 
@@ -40,9 +43,6 @@
           <span class="user-name">{{ usuario }}</span>
           <span class="user-role">{{ role }}</span>
         </div>
-        <button mat-icon-button [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">
-          <mat-icon>language</mat-icon>
-        </button>
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
           <mat-icon>account_circle</mat-icon>
         </button>
@@ -58,11 +58,12 @@
         </button>
       </mat-menu>
       <mat-menu #languageMenu="matMenu">
-        <button mat-menu-item (click)="changeLanguage('pt')">
-          <span>{{ 'app.language.pt' | translate }}</span>
-        </button>
-        <button mat-menu-item (click)="changeLanguage('en')">
-          <span>{{ 'app.language.en' | translate }}</span>
+        <button
+          mat-menu-item
+          *ngFor="let lang of languages"
+          (click)="changeLanguage(lang.code)">
+          <img class="language-menu-flag" [src]="lang.flag" [alt]="lang.code">
+          <span>{{ lang.labelKey | translate }}</span>
         </button>
       </mat-menu>
     </header>

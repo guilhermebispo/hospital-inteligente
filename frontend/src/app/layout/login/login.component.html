@@ -51,6 +51,24 @@
 
     </mat-card>
 
-    <p class="footer">{{ 'app.footer' | translate }}</p>
+    <div class="footer">
+      <button
+        mat-icon-button
+        class="language-button"
+        [matMenuTriggerFor]="loginLanguageMenu"
+        [attr.aria-label]="'app.language.label' | translate">
+        <img class="language-flag" [src]="currentLanguageFlag" [alt]="('app.language.' + currentLanguage) | translate">
+      </button>
+      <span>{{ 'app.footer' | translate }}</span>
+    </div>
+    <mat-menu #loginLanguageMenu="matMenu">
+      <button
+        mat-menu-item
+        *ngFor="let lang of languages"
+        (click)="changeLanguage(lang.code)">
+        <img class="language-menu-flag" [src]="lang.flag" [alt]="lang.code">
+        <span>{{ lang.labelKey | translate }}</span>
+      </button>
+    </mat-menu>
   </div>
 </div>

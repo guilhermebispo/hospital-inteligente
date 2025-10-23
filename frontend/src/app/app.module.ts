@@ -77,7 +77,7 @@ import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.c
     MatSortModule,
     MatTooltipModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'pt',
+      defaultLanguage: 'pt-BR',
       loader: {
         provide: TranslateLoader,
         useClass: TranslateHttpLoader

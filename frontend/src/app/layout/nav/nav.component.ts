@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../security/auth.service';
@@ -7,6 +7,15 @@ import { SenhaFormComponent } from './senha-form/senha-form.component';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+type SupportedLanguage = 'pt-BR' | 'en';
+
+interface LanguageOption {
+  code: SupportedLanguage;
+  flag: string;
+  labelKey: string;
+}
 
 @Component({
   selector: 'app-nav',
@@ -14,12 +23,19 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
 
   usuario!: string;
   perfil!: string;
   role!: string;
   menuAberto = false;
+  currentLanguage: SupportedLanguage = 'pt-BR';
+  readonly languages: LanguageOption[] = [
+    { code: 'pt-BR', flag: 'assets/flags/pt.svg', labelKey: 'app.language.pt-BR' },
+    { code: 'en', flag: 'assets/flags/en.svg', labelKey: 'app.language.en' }
+  ];
+  private perfilLabelPadrao?: string;
+  private langChangeSub?: Subscription;
 
   constructor(
     private router: Router,
@@ -31,6 +47,12 @@ export class NavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.currentLanguage = this.resolveCurrentLanguage();
+    this.langChangeSub = this.translateService.onLangChange.subscribe(({ lang }) => {
+      this.currentLanguage = this.normalizeLanguage(lang) ?? 'pt-BR';
+      this.atualizarRoleTraduzida();
+    });
+
     this.router.navigate(['home']);
 
     const email = this.authService.getUser()?.email || this.authService.getUserName();
@@ -39,14 +61,17 @@ export class NavComponent implements OnInit {
       next: (res: Usuario) => {
         this.usuario = res.nome;
         this.perfil = res.perfil.code;
-        const roleKey = `users.roles.${res.perfil.code}`;
-        const translatedRole = this.translateService.instant(roleKey);
-        this.role = translatedRole === roleKey ? res.perfil.label : translatedRole;
+        this.perfilLabelPadrao = res.perfil.label;
+        this.atualizarRoleTraduzida();
       },
       error: (err) => {
         this.toastrService.error(this.translateService.instant('nav.errors.loadUser'));
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 
   toggleMenu(): void {
@@ -80,13 +105,65 @@ export class NavComponent implements OnInit {
     this.toastrService.info(this.translateService.instant('auth.messages.logout'));
   }
 
-  changeLanguage(lang: 'pt' | 'en'): void {
-    this.translateService.use(lang);
-    localStorage.setItem('app_lang', lang);
-    if (this.perfil) {
-      const roleKey = `users.roles.${this.perfil}`;
-      const translatedRole = this.translateService.instant(roleKey);
-      this.role = translatedRole === roleKey ? this.role : translatedRole;
+  changeLanguage(lang: SupportedLanguage): void {
+    const normalized = this.normalizeLanguage(lang) ?? 'pt-BR';
+    this.currentLanguage = normalized;
+    this.translateService.use(normalized);
+    localStorage.setItem('app_lang', normalized);
+    this.atualizarRoleTraduzida();
+  }
+
+  get currentLanguageFlag(): string {
+    return (
+      this.languages.find((lang) => lang.code === this.currentLanguage)?.flag ??
+      this.languages[0].flag
+    );
+  }
+
+  private resolveCurrentLanguage(): SupportedLanguage {
+    const stored = localStorage.getItem('app_lang');
+    const normalizedStored = this.normalizeLanguage(stored);
+    if (normalizedStored) {
+      return normalizedStored;
     }
+
+    const current = this.normalizeLanguage(this.translateService.currentLang);
+    if (current) {
+      return current;
+    }
+
+    const fallback = this.normalizeLanguage(this.translateService.getDefaultLang());
+    return fallback ?? 'pt-BR';
+  }
+
+  private isSupported(lang: string): lang is SupportedLanguage {
+    return this.languages.some((opt) => opt.code === lang);
+  }
+
+  private normalizeLanguage(lang: string | null | undefined): SupportedLanguage | null {
+    if (!lang) {
+      return null;
+    }
+
+    const lowered = lang.toLowerCase();
+    if (lowered === 'en' || lowered.startsWith('en-')) {
+      return 'en';
+    }
+
+    if (lowered === 'pt' || lowered === 'pt-br' || lowered.startsWith('pt-')) {
+      return 'pt-BR';
+    }
+
+    return this.isSupported(lang) ? (lang as SupportedLanguage) : null;
+  }
+
+  private atualizarRoleTraduzida(): void {
+    if (!this.perfil) {
+      return;
+    }
+
+    const roleKey = `users.roles.${this.perfil}`;
+    const translatedRole = this.translateService.instant(roleKey);
+    this.role = translatedRole === roleKey ? (this.perfilLabelPadrao ?? this.perfil) : translatedRole;
   }
 }

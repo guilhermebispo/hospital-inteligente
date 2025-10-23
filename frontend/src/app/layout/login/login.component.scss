@@ -45,6 +45,36 @@
   padding: 2rem 1.5rem;
   background: linear-gradient(145deg, #f7f9fb 0%, #e2ebf5 100%);
 
+  .language-switcher {
+    align-self: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .language-button {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(10, 66, 151, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover,
+    &:focus-visible {
+      background-color: rgba(10, 66, 151, 0.12);
+    }
+  }
+
+  .language-flag {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
   .login-card {
     width: min(430px, 100%);
     padding: clamp(1.5rem, 4vw, 2rem);
@@ -131,7 +161,29 @@
     font-size: 0.8rem;
     color: #637082;
     width: min(90%, 360px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
+}
+
+.language-menu-flag {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.footer-flag {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 992px) {
@@ -162,6 +214,13 @@
 
   .login-right {
     padding: 2rem 1.25rem 3rem;
+
+    .language-switcher {
+      align-self: stretch;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1.25rem;
+    }
 
     .login-card {
       width: min(450px, 100%);
@@ -198,6 +257,10 @@
 
   .login-right {
     padding: 1.5rem 1rem 2.25rem;
+
+    .language-switcher {
+      justify-content: center;
+    }
   }
 
   .login-right .login-card {

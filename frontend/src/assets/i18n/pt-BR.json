@@ -4,7 +4,7 @@
     "footer": "© 2025 Hospital Inteligente. Todos os direitos reservados.",
     "language": {
       "label": "Idioma",
-      "pt": "Português",
+      "pt-BR": "Português (Brasil)",
       "en": "Inglês"
     }
   },
@@ -87,7 +87,8 @@
     },
     "roles": {
       "ADMIN": "Administrador",
-      "USER": "Usuário"
+      "USER": "Usuário",
+      "MEDICO": "Médico"
     },
     "dialog": {
       "createTitle": "CADASTRAR USUÁRIO",

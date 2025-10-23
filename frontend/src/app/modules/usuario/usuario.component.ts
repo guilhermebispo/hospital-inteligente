@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Usuario, UsuarioCreatePayload } from '../../models/usuario';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss']
 })
-export class UsuarioComponent implements OnInit {
+export class UsuarioComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   usuarios: Usuario[] = [];
@@ -27,8 +27,10 @@ export class UsuarioComponent implements OnInit {
   pageSize = 10;
   filtroTexto = '';
   filtroPerfil = '';
+  sortState: Sort = { active: '', direction: '' };
 
   perfisList: Dominio[] = [];
+  private hasViewInitialized = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -41,7 +43,9 @@ export class UsuarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dominioService.buscarPerfis().subscribe(data => this.perfisList = data);
+    this.dominioService.buscarPerfis().subscribe(data => {
+      this.perfisList = this.ensureMedicoPerfil(data);
+    });
 
     this.activatedRoute.queryParamMap.subscribe(params => {
       this.pageIndex = +params.get('page')! || 0;
@@ -51,20 +55,29 @@ export class UsuarioComponent implements OnInit {
       const sortParam = params.get('sort');
       if (sortParam) {
         const [active, direction] = sortParam.split(',');
-        if (this.sort) {
-          this.sort.active = active;
-          this.sort.direction = direction as 'asc' | 'desc';
-        }
+        this.sortState = {
+          active: active || '',
+          direction: direction === 'asc' || direction === 'desc' ? direction : ''
+        };
+        this.applySortStateToDirective();
+      } else {
+        this.sortState = { active: '', direction: '' };
       }
       this.carregarUsuarios();
     });
   }
 
+  ngAfterViewInit(): void {
+    this.hasViewInitialized = true;
+    this.applySortStateToDirective();
+  }
+
   carregarUsuarios(): void {
+    const sortParam = this.getSortParam();
     this.usuarioService.listar({
       page: this.pageIndex,
       size: this.pageSize,
-      sort: this.sort ? `${this.sort.active},${this.sort.direction}` : undefined,
+      sort: sortParam,
       texto: this.filtroTexto,
       perfil: this.filtroPerfil
     }).subscribe(response => {
@@ -81,7 +94,7 @@ export class UsuarioComponent implements OnInit {
         size: this.pageSize,
         texto: this.filtroTexto || null,
         perfil: this.filtroPerfil || null,
-        sort: this.sort ? `${this.sort.active},${this.sort.direction}` : null
+        sort: this.getSortParam() ?? null
       },
       queryParamsHandling: 'merge'
     });
@@ -96,17 +109,12 @@ export class UsuarioComponent implements OnInit {
   }
 
   onSortChange(sort: Sort): void {
-    this.usuarioService.listar({
-      page: this.pageIndex,
-      size: this.pageSize,
-      sort: `${sort.active},${sort.direction}`,
-      texto: this.filtroTexto,
-      perfil: this.filtroPerfil
-    }).subscribe(response => {
-      this.usuarios = response.content;
-      this.totalRegistros = response.totalElements;
-      this.atualizarUrl();
-    });
+    const direction = sort.direction === 'asc' || sort.direction === 'desc' ? sort.direction : '';
+    this.sortState = direction ? { active: sort.active, direction } : { active: '', direction: '' };
+    this.applySortStateToDirective();
+    this.pageIndex = 0;
+    this.atualizarUrl();
+    this.carregarUsuarios();
   }
 
   aplicarFiltros(): void {
@@ -196,5 +204,32 @@ export class UsuarioComponent implements OnInit {
         });
       }
     });
+  }
+
+  private getSortParam(): string | undefined {
+    return this.sortState.active && this.sortState.direction
+      ? `${this.sortState.active},${this.sortState.direction}`
+      : undefined;
+  }
+
+  private applySortStateToDirective(): void {
+    if (!this.hasViewInitialized || !this.sort) {
+      return;
+    }
+
+    this.sort.active = this.sortState.active;
+    this.sort.direction = (this.sortState.direction as 'asc' | 'desc' | '');
+  }
+
+  private ensureMedicoPerfil(perfis: Dominio[]): Dominio[] {
+    const possuiMedico = perfis.some(perfil => perfil.code === 'MEDICO');
+    if (possuiMedico) {
+      return perfis;
+    }
+
+    return [
+      ...perfis,
+      { code: 'MEDICO', label: 'Médico' }
+    ];
   }
 }

@@ -4,7 +4,7 @@
   <div class="filtros">
     <mat-form-field appearance="outline">
       <mat-label>{{ 'users.filters.profile' | translate }}</mat-label>
-      <mat-select [(value)]="filtroPerfil" (selectionChange)="aplicarFiltros()">
+      <mat-select [(ngModel)]="filtroPerfil" name="perfilFiltro" (selectionChange)="aplicarFiltros()">
         <mat-option value="">{{ 'common.all' | translate }}</mat-option>
         <mat-option *ngFor="let perfil of perfisList" [value]="perfil.code">
           {{ ('users.roles.' + perfil.code) | translate }}

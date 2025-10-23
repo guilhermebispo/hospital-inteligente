@@ -10,17 +10,36 @@ export class AppComponent {
   title = 'Hospital Inteligente';
 
   constructor(private translateService: TranslateService) {
-    this.translateService.addLangs(['pt', 'en']);
-    this.translateService.setDefaultLang('pt');
+    this.translateService.addLangs(['pt-BR', 'en']);
+    this.translateService.setDefaultLang('pt-BR');
 
     const storedLang = localStorage.getItem('app_lang');
     const browserLang = this.translateService.getBrowserLang();
-    const fallback = browserLang && ['pt', 'en'].includes(browserLang) ? browserLang : 'pt';
-    const langToUse = storedLang && ['pt', 'en'].includes(storedLang) ? storedLang : fallback;
+    const normalizedBrowserLang = this.normalizeLanguage(browserLang);
+    const fallback = normalizedBrowserLang ?? 'pt-BR';
+    const normalizedStored = this.normalizeLanguage(storedLang);
+    const langToUse = normalizedStored ?? fallback;
 
     this.translateService.use(langToUse);
     this.translateService.stream('app.name').subscribe((name) => {
       this.title = name;
     });
+  }
+
+  private normalizeLanguage(lang: string | null | undefined): 'pt-BR' | 'en' | null {
+    if (!lang) {
+      return null;
+    }
+
+    const lowered = lang.toLowerCase();
+    if (lowered === 'en' || lowered.startsWith('en-')) {
+      return 'en';
+    }
+
+    if (lowered === 'pt' || lowered === 'pt-br' || lowered.startsWith('pt-')) {
+      return 'pt-BR';
+    }
+
+    return null;
   }
 }

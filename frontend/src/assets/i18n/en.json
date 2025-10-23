@@ -4,7 +4,7 @@
     "footer": "© 2025 Smart Hospital. All rights reserved.",
     "language": {
       "label": "Language",
-      "pt": "Portuguese",
+      "pt-BR": "Portuguese (Brazil)",
       "en": "English"
     }
   },
@@ -87,7 +87,8 @@
     },
     "roles": {
       "ADMIN": "Administrator",
-      "USER": "User"
+      "USER": "User",
+      "MEDICO": "Doctor"
     },
     "dialog": {
       "createTitle": "CREATE USER",

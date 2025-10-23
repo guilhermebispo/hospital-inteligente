@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,6 +6,15 @@ import { Credencial } from '../../models/credencial';
 import { AuthService } from '../../security/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+
+type SupportedLanguage = 'pt-BR' | 'en';
+
+interface LanguageOption {
+  code: SupportedLanguage;
+  flag: string;
+  labelKey: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -13,10 +22,16 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm!: FormGroup;
   hide = true;
+  currentLanguage: SupportedLanguage = 'pt-BR';
+  readonly languages: LanguageOption[] = [
+    { code: 'pt-BR', flag: 'assets/flags/pt.svg', labelKey: 'app.language.pt-BR' },
+    { code: 'en', flag: 'assets/flags/en.svg', labelKey: 'app.language.en' }
+  ];
+  private langChangeSub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +46,15 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+    this.currentLanguage = this.resolveCurrentLanguage();
+    this.langChangeSub = this.translate.onLangChange.subscribe(({ lang }) => {
+      this.currentLanguage = this.normalizeLanguage(lang) ?? 'pt-BR';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
   }
 
   logar(): void {
@@ -79,4 +103,53 @@ export class LoginComponent implements OnInit {
     return this.loginForm.valid;
   }
 
+  changeLanguage(lang: SupportedLanguage): void {
+    const normalized = this.normalizeLanguage(lang) ?? 'pt-BR';
+    this.currentLanguage = normalized;
+    this.translate.use(normalized);
+    localStorage.setItem('app_lang', normalized);
+  }
+
+  get currentLanguageFlag(): string {
+    return (
+      this.languages.find((lang) => lang.code === this.currentLanguage)?.flag ??
+      this.languages[0].flag
+    );
+  }
+
+  private resolveCurrentLanguage(): SupportedLanguage {
+    const stored = this.normalizeLanguage(localStorage.getItem('app_lang'));
+    if (stored) {
+      return stored;
+    }
+
+    const current = this.normalizeLanguage(this.translate.currentLang);
+    if (current) {
+      return current;
+    }
+
+    const fallback = this.normalizeLanguage(this.translate.getDefaultLang());
+    return fallback ?? 'pt-BR';
+  }
+
+  private isSupported(lang: string): lang is SupportedLanguage {
+    return this.languages.some((option) => option.code === lang);
+  }
+
+  private normalizeLanguage(lang: string | null | undefined): SupportedLanguage | null {
+    if (!lang) {
+      return null;
+    }
+
+    const lowered = lang.toLowerCase();
+    if (lowered === 'en' || lowered.startsWith('en-')) {
+      return 'en';
+    }
+
+    if (lowered === 'pt' || lowered === 'pt-br' || lowered.startsWith('pt-')) {
+      return 'pt-BR';
+    }
+
+    return this.isSupported(lang) ? (lang as SupportedLanguage) : null;
+  }
 }
