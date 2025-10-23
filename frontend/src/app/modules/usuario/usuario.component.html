@@ -1,0 +1,65 @@
+<div class="usuario-container">
+  <h2 class="titulo-pagina">Usuários</h2>
+
+  <div class="filtros">
+    <mat-form-field appearance="outline">
+      <mat-label>Perfil</mat-label>
+      <mat-select [(value)]="filtroPerfil" (selectionChange)="aplicarFiltros()">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let perfil of perfisList" [value]="perfil">{{ perfil }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar</mat-label>
+      <input matInput [(ngModel)]="filtroTexto" (keyup.enter)="aplicarFiltros()">
+    </mat-form-field>
+
+    <button mat-fab extended (click)="aplicarFiltros()">
+      <mat-icon>search</mat-icon> Filtrar
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="usuarios" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8">
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.nome }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="perfil">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Perfil</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.perfil.label }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let usuario">
+        <button mat-icon-button matTooltip="Editar usuário" (click)="editarUsuario(usuario)">
+          <mat-icon class="primary">edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Alterar perfil" (click)="alterarPerfil(usuario)">
+          <mat-icon class="primary">manage_accounts</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Excluir usuário" (click)="deletarUsuario(usuario)">
+          <mat-icon class="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['nome','email','perfil','acoes']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['nome','email','perfil','acoes'];"></tr>
+  </table>
+
+  <mat-paginator [length]="totalRegistros" [pageSize]="pageSize" [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPageChange($event)" aria-label="Seleção de página">
+  </mat-paginator>
+</div>
+
+<button mat-fab extended class="novo-usuario-btn" (click)="cadastrarUsuario()">
+  <mat-icon>person_add</mat-icon> Novo Usuário
+</button>

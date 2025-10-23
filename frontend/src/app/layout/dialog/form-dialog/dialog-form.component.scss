@@ -1,0 +1,20 @@
+.dialog-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.save-button {
+  background-color: #054097 !important;
+  color: #fff !important;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0240a3 !important;
+  }
+
+  &:disabled {
+    background-color: #b6b6b6 !important;
+    color: #e0e0e0 !important;
+  }
+}

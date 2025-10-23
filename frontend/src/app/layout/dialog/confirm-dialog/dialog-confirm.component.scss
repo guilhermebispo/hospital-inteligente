@@ -1,0 +1,13 @@
+.dialog-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.danger-button {
+  background-color: #c92323 !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: #eb1a1a !important;
+  }
+}

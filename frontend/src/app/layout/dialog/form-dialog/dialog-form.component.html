@@ -1,0 +1,12 @@
+<h2 mat-dialog-title class="dialog-title">{{ data.title }}</h2>
+
+<mat-dialog-content>
+  <ng-template #formContainer></ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="!data.readonly">
+  <button mat-raised-button class="save-button" (click)="salvar()" [disabled]="isSaveDisabled()">
+    Salvar
+  </button>
+  <button mat-button (click)="cancelar()">Cancelar</button>
+</mat-dialog-actions>

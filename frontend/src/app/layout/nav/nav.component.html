@@ -1,0 +1,50 @@
+<div class="container">
+  <nav class="sidenav">
+    <a routerLink="home" routerLinkActive="active" class="nav-link">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a routerLink="usuarios" routerLinkActive="active" class="nav-link" *ngIf="perfil == 'ADMIN'">
+      <mat-icon>person</mat-icon>
+      <span>Usuários</span>
+    </a>
+
+    <div class="sidenav-footer">
+      © 2025 Hospital Inteligente.
+      Todos os direitos reservados.
+    </div>
+  </nav>
+
+  <div class="sidenav-content">
+    <header class="header">
+      <div class="header-left">
+        <img src="/logo.png" alt="Hospital Inteligente" class="header-logo">
+        <span class="header-title">HOSPITAL INTELIGENTE</span>
+      </div>
+
+      <div class="header-right">
+        <div class="user-info">
+          <span class="user-name">{{ usuario }}</span>
+          <span class="user-role">{{ role }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+      <mat-menu #userMenu="matMenu" class="custom-menu">
+        <button mat-menu-item (click)="alterarSenha()">
+          <mat-icon>key</mat-icon>
+          <span>Alterar senha</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
+    </header>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

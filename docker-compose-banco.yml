@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+  hospital_net:
+
+volumes:
+  db_data:
+
+services:
+  db:
+    image: postgres:16
+    container_name: hospital_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hospital_db}
+      POSTGRES_USER: ${POSTGRES_USER:-hospital_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hospital_pass}
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - hospital_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hospital_user} -d ${POSTGRES_DB:-hospital_db} -h localhost -p 5432 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20

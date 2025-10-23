@@ -1,0 +1,15 @@
+<mat-dialog-content class="perfil-form-content">
+  <form [formGroup]="form" class="form-fields">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Perfil</mat-label>
+      <mat-select formControlName="perfil">
+        <mat-option *ngFor="let s of perfisList" [value]="s.code">{{ s.label }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('perfil')?.hasError('required')">
+        O perfil é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>

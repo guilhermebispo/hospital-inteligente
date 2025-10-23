@@ -1,0 +1,25 @@
+.usuario-form-content {
+  padding: 12px 8px 0 8px;
+
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info-message {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 0.80rem;
+    background-color: #fce29d;
+    color: #c2780a;
+    padding: 4px 45px;
+    border: 1px solid #d8870d;
+    border-radius: 10px;
+
+    mat-icon {
+      width: 40px;
+    }
+  }
+}

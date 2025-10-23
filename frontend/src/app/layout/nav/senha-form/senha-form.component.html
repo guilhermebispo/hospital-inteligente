@@ -1,0 +1,30 @@
+<mat-dialog-content class="senha-form-content">
+  <form [formGroup]="form" class="form-fields">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha">
+      <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error *ngIf="form.get('senha')?.hasError('required')">
+        A senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="form.get('senha')?.hasError('minlength')">
+        A senha deve ter pelo menos 6 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Confirmar Senha</mat-label>
+      <input matInput type="password" formControlName="confirmarSenha">
+      <mat-error *ngIf="form.hasError('senhasDiferentes')">
+        As senhas não conferem
+      </mat-error>
+      <mat-error *ngIf="form.get('confirmarSenha')?.hasError('required')">
+        A confirmação de senha é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
