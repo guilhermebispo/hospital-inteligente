@@ -6,7 +6,7 @@
 
 <mat-dialog-actions *ngIf="!data.readonly">
   <button mat-raised-button class="save-button" (click)="salvar()" [disabled]="isSaveDisabled()">
-    Salvar
+    {{ 'common.save' | translate }}
   </button>
-  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-button (click)="cancelar()">{{ 'common.cancel' | translate }}</button>
 </mat-dialog-actions>

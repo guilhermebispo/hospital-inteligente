@@ -23,6 +23,8 @@
     "@angular/router": "^19.0.0",
     "@auth0/angular-jwt": "^5.2.0",
     "@swimlane/ngx-charts": "^23.0.1",
+    "@ngx-translate/core": "^16.0.3",
+    "@ngx-translate/http-loader": "^17.0.0",
     "ngx-mask": "^20.0.3",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

@@ -1,0 +1,158 @@
+{
+  "app": {
+    "name": "Hospital Inteligente",
+    "footer": "© 2025 Hospital Inteligente. Todos os direitos reservados.",
+    "language": {
+      "label": "Idioma",
+      "pt": "Português",
+      "en": "Inglês"
+    }
+  },
+  "nav": {
+    "menu": {
+      "home": "Home",
+      "users": "Usuários",
+      "changePassword": "Alterar senha",
+      "logout": "Sair"
+    },
+    "language": {
+      "title": "Idioma"
+    },
+    "toggleOpen": "Abrir menu",
+    "toggleClose": "Fechar menu",
+    "errors": {
+      "loadUser": "Erro ao buscar usuário"
+    }
+  },
+  "login": {
+    "title": "Fazer Login",
+    "email": "E-mail",
+    "emailPlaceholder": "Digite seu e-mail",
+    "emailInvalid": "E-mail inválido",
+    "password": "Senha",
+    "remember": "Lembre-me",
+    "forgot": "Esqueceu sua senha?",
+    "submit": "Entrar",
+    "signupQuestion": "Ainda não tem conta?",
+    "signupLink": "Cadastre-se",
+    "messages": {
+      "fillFields": "Preencha os campos corretamente",
+      "tokenError": "Erro ao obter token de autenticação",
+      "invalidCredentials": "Usuário e/ou senha inválidos"
+    }
+  },
+  "home": {
+    "welcome": "Bem-vindo(a), {{name}}!",
+    "defaultUser": "Colaborador",
+    "info": {
+      "title": "Hospital Inteligente",
+      "body": "Utilize o menu lateral para acessar os recursos administrativos do hospital, como o cadastro e a gestão de usuários. Novas funcionalidades clínicas podem ser adicionadas a partir desta base."
+    },
+    "tips": {
+      "title": "Próximos Passos",
+      "items": [
+        "Cadastre os profissionais e defina os perfis de acesso.",
+        "Configure integrações e fluxos específicos do seu hospital.",
+        "Personalize o layout com a identidade visual da instituição."
+      ]
+    },
+    "errors": {
+      "loadUser": "Erro ao buscar dados do usuário"
+    }
+  },
+  "users": {
+    "title": "Usuários",
+    "filters": {
+      "profile": "Perfil",
+      "search": "Buscar",
+      "button": "Filtrar"
+    },
+    "table": {
+      "name": "Nome",
+      "email": "E-mail",
+      "profile": "Perfil",
+      "actions": "Ações"
+    },
+    "cards": {
+      "email": "E-mail",
+      "profile": "Perfil"
+    },
+    "buttons": {
+      "new": "Novo Usuário"
+    },
+    "tooltips": {
+      "edit": "Editar usuário",
+      "changeRole": "Alterar perfil",
+      "delete": "Excluir usuário"
+    },
+    "roles": {
+      "ADMIN": "Administrador",
+      "USER": "Usuário"
+    },
+    "dialog": {
+      "createTitle": "CADASTRAR USUÁRIO",
+      "editTitle": "EDITAR USUÁRIO",
+      "updateProfile": "ALTERAR PERFIL",
+      "deleteTitle": "Excluir Usuário",
+      "deleteMessage": "Tem certeza que deseja deletar o usuário {{name}}?"
+    },
+    "messages": {
+      "created": "Usuário cadastrado com sucesso!",
+      "createError": "Erro ao cadastrar usuário.",
+      "updated": "Usuário atualizado com sucesso!",
+      "updateError": "Erro ao atualizar usuário.",
+      "profileUpdated": "Perfil atualizado com sucesso!",
+      "profileError": "Erro ao atualizar perfil.",
+      "deleted": "Usuário excluído com sucesso!",
+      "deleteError": "Erro ao excluir usuário."
+    }
+  },
+  "forms": {
+    "name": "Nome",
+    "email": "E-mail",
+    "profile": "Perfil",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "validation": {
+      "nameRequired": "O nome é obrigatório",
+      "nameMax": "O nome deve ter no máximo 150 caracteres",
+      "emailRequired": "O e-mail é obrigatório",
+      "emailInvalid": "E-mail inválido",
+      "emailMax": "O e-mail deve ter no máximo 120 caracteres",
+      "profileRequired": "O perfil é obrigatório",
+      "passwordRequired": "A senha é obrigatória",
+      "passwordMin": "A senha deve ter pelo menos 6 caracteres",
+      "passwordConfirmRequired": "A confirmação de senha é obrigatória",
+      "passwordMismatch": "As senhas não conferem"
+    },
+    "info": {
+      "defaultPassword": "Por padrão, novos usuários terão a senha <b>123456</b>. Por favor, altere após o primeiro acesso."
+    }
+  },
+  "auth": {
+    "errors": {
+      "changePassword": "Erro ao alterar senha.",
+      "fetchUser": "Erro ao buscar usuário"
+    },
+    "messages": {
+      "passwordChanged": "Senha alterada com sucesso!",
+      "logout": "Logout realizado com sucesso"
+    },
+    "defaultUser": "Usuário"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "all": "Todos"
+  },
+  "paginator": {
+    "itemsPerPage": "Itens por página",
+    "nextPage": "Próxima página",
+    "previousPage": "Página anterior",
+    "firstPage": "Primeira página",
+    "lastPage": "Última página",
+    "range": "{{start}} – {{end}} de {{length}}",
+    "rangeZero": "0 de {{length}}"
+  }
+}

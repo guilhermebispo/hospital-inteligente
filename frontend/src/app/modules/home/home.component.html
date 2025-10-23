@@ -1,21 +1,15 @@
 <div class="home-container">
-  <h1 class="welcome-title">Bem-vindo(a), {{ usuario }}!</h1>
+  <h1 class="welcome-title">{{ 'home.welcome' | translate:{ name: usuario } }}</h1>
 
   <mat-card class="info-card">
-    <h2>Hospital Inteligente</h2>
-    <p>
-      Utilize o menu lateral para acessar os recursos administrativos do hospital,
-      como o cadastro e a gestão de usuários. Novas funcionalidades clínicas podem
-      ser adicionadas a partir desta base.
-    </p>
+    <h2>{{ 'home.info.title' | translate }}</h2>
+    <p [innerHTML]="'home.info.body' | translate"></p>
   </mat-card>
 
   <mat-card class="tips-card">
-    <h2>Próximos Passos</h2>
+    <h2>{{ 'home.tips.title' | translate }}</h2>
     <ul>
-      <li>Cadastre os profissionais e defina os perfis de acesso.</li>
-      <li>Configure integrações e fluxos específicos do seu hospital.</li>
-      <li>Personalize o layout com a identidade visual da instituição.</li>
+      <li *ngFor="let tip of tips">{{ tip }}</li>
     </ul>
   </mat-card>
 </div>

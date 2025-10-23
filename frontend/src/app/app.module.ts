@@ -23,6 +23,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layout/login/login.component';
@@ -74,6 +76,13 @@ import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.c
     MatDialogModule,
     MatSortModule,
     MatTooltipModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'pt',
+      loader: {
+        provide: TranslateLoader,
+        useClass: TranslateHttpLoader
+      }
+    }),
     ToastrModule.forRoot({
       timeOut: 4000,
       closeButton: true,
@@ -86,6 +95,13 @@ import { PerfilFormComponent } from './modules/usuario/perfil-form/perfil-form.c
     AuthInterceptorProvider,
     provideHttpClient(withInterceptorsFromDi()),
     provideEnvironmentNgxMask(),
+    {
+      provide: TRANSLATE_HTTP_LOADER_CONFIG,
+      useValue: {
+        prefix: './assets/i18n/',
+        suffix: '.json'
+      }
+    },
     { provide: MatPaginatorIntl, useClass: MatPaginatorBrService}
   ],
   bootstrap: [AppComponent]

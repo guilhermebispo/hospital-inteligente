@@ -3,6 +3,6 @@
 <mat-dialog-content>{{ data.message }}</mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button class="danger-button" (click)="confirmar()">Confirmar</button>
-  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button class="danger-button" (click)="confirmar()">{{ 'common.confirm' | translate }}</button>
+  <button mat-button (click)="cancelar()">{{ 'common.cancel' | translate }}</button>
 </mat-dialog-actions>

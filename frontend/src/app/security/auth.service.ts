@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { UsuarioService } from '../services/usuario.service';
 import { Usuario } from '../models/usuario';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 const API = environment.baseUrl;
 
@@ -30,7 +31,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private usuarioService: UsuarioService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private translateService: TranslateService
   ) {
   }
 
@@ -49,7 +51,7 @@ export class AuthService {
         this.currentUser$.next(res);
       },
       error: () => {
-        this.toastrService.error('Erro ao buscar usuário');
+        this.toastrService.error(this.translateService.instant('auth.errors.fetchUser'));
       }
     });
   }
@@ -81,7 +83,7 @@ export class AuthService {
 
   getUserName(): string {
     const user = this.getUser();
-    return user?.name || user?.sub || 'Usuário';
+    return user?.name || user?.sub || this.translateService.instant('auth.defaultUser');
   }
 
   getUserRoles(): string[] {

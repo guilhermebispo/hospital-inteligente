@@ -1,25 +1,38 @@
-<div class="container">
-  <nav class="sidenav">
-    <a routerLink="home" routerLinkActive="active" class="nav-link">
+<div class="container" [class.menu-open]="menuAberto">
+  <nav class="sidenav" [class.open]="menuAberto">
+    <button mat-icon-button class="close-button" (click)="closeMenu()" [attr.aria-label]="'nav.toggleClose' | translate">
+      <mat-icon>close</mat-icon>
+    </button>
+    <div class="mobile-user" *ngIf="usuario">
+      <div class="mobile-user__info">
+        <span class="mobile-user__name">{{ usuario }}</span>
+        <span class="mobile-user__role">{{ role }}</span>
+      </div>
+    </div>
+    <a routerLink="home" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
       <mat-icon>home</mat-icon>
-      <span>Home</span>
+      <span>{{ 'nav.menu.home' | translate }}</span>
     </a>
-    <a routerLink="usuarios" routerLinkActive="active" class="nav-link" *ngIf="perfil == 'ADMIN'">
+    <a routerLink="usuarios" routerLinkActive="active" class="nav-link" *ngIf="perfil == 'ADMIN'" (click)="closeMenu()">
       <mat-icon>person</mat-icon>
-      <span>Usuários</span>
+      <span>{{ 'nav.menu.users' | translate }}</span>
     </a>
 
     <div class="sidenav-footer">
-      © 2025 Hospital Inteligente.
-      Todos os direitos reservados.
+      {{ 'app.footer' | translate }}
     </div>
   </nav>
 
+  <div class="backdrop" *ngIf="menuAberto" (click)="closeMenu()"></div>
+
   <div class="sidenav-content">
     <header class="header">
+      <button mat-icon-button class="menu-toggle" (click)="toggleMenu()" [attr.aria-label]="'nav.toggleOpen' | translate">
+        <mat-icon>menu</mat-icon>
+      </button>
       <div class="header-left">
-        <img src="/logo.png" alt="Hospital Inteligente" class="header-logo">
-        <span class="header-title">HOSPITAL INTELIGENTE</span>
+        <img src="/logo.png" alt="{{ 'app.name' | translate }}" class="header-logo">
+        <span class="header-title">{{ 'app.name' | translate | uppercase }}</span>
       </div>
 
       <div class="header-right">
@@ -27,6 +40,9 @@
           <span class="user-name">{{ usuario }}</span>
           <span class="user-role">{{ role }}</span>
         </div>
+        <button mat-icon-button [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">
+          <mat-icon>language</mat-icon>
+        </button>
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
           <mat-icon>account_circle</mat-icon>
         </button>
@@ -34,11 +50,19 @@
       <mat-menu #userMenu="matMenu" class="custom-menu">
         <button mat-menu-item (click)="alterarSenha()">
           <mat-icon>key</mat-icon>
-          <span>Alterar senha</span>
+          <span>{{ 'nav.menu.changePassword' | translate }}</span>
         </button>
         <button mat-menu-item (click)="logout()">
           <mat-icon>logout</mat-icon>
-          <span>Sair</span>
+          <span>{{ 'nav.menu.logout' | translate }}</span>
+        </button>
+      </mat-menu>
+      <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item (click)="changeLanguage('pt')">
+          <span>{{ 'app.language.pt' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="changeLanguage('en')">
+          <span>{{ 'app.language.en' | translate }}</span>
         </button>
       </mat-menu>
     </header>

@@ -10,6 +10,9 @@ Base fullstack do sistema **Hospital Inteligente**, composta por **FastAPI + Ang
 O foco atual está em autenticação, autorização e gestão de usuários, servindo como alicerce para
 novos módulos clínicos e operacionais.
 
+O frontend oferece internacionalização com suporte a **Português** e **Inglês** – o idioma pode ser
+alternado pelo menu superior da aplicação.
+
 ---
 
 ## 🚀 Tecnologias
@@ -34,6 +37,10 @@ novos módulos clínicos e operacionais.
 git clone https://github.com/seu-usuario/hospital-inteligente.git
 cd hospital-inteligente
 
+# configurar variáveis de ambiente
+cp .env.example .env
+# edite .env se precisar alterar credenciais/URLs
+
 # subir os containers
 docker compose up -d --build
 ```
@@ -54,8 +61,11 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# exporte as variáveis de ambiente se necessário
-export DATABASE_URL="postgresql+psycopg://hospital_user:hospital_pass@localhost:5434/hospital_db"
+cp .env.example .env
+# personalize o arquivo conforme o seu ambiente
+source .env  # carrega as variáveis (PowerShell: Get-Content .env | ForEach-Object { if($_ -and $_ -notmatch '^#') { $name,$value = $_ -split '=',2; Set-Item env:$name $value } })
+# caso prefira, exporte manualmente: export DATABASE_URL="$LOCAL_DATABASE_URL"
+
 python scripts/run_migrations.py
 
 uvicorn app.main:app --reload --port 8080

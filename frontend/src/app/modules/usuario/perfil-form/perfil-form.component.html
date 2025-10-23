@@ -2,12 +2,14 @@
   <form [formGroup]="form" class="form-fields">
 
     <mat-form-field appearance="outline">
-      <mat-label>Perfil</mat-label>
+      <mat-label>{{ 'forms.profile' | translate }}</mat-label>
       <mat-select formControlName="perfil">
-        <mat-option *ngFor="let s of perfisList" [value]="s.code">{{ s.label }}</mat-option>
+        <mat-option *ngFor="let s of perfisList" [value]="s.code">
+          {{ ('users.roles.' + s.code) | translate }}
+        </mat-option>
       </mat-select>
       <mat-error *ngIf="form.get('perfil')?.hasError('required')">
-        O perfil é obrigatório
+        {{ 'forms.validation.profileRequired' | translate }}
       </mat-error>
     </mat-form-field>
 

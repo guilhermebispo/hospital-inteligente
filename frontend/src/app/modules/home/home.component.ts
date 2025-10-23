@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../security/auth.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,25 +12,40 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   usuario = '';
+  tips: string[] = [];
+  private langChangeSub!: Subscription;
 
   constructor(
     private usuarioService: UsuarioService,
     private toastrService: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.langChangeSub = this.translateService.onLangChange.subscribe(() => this.carregarDicas());
+    this.carregarDicas();
     this.carregarUsuario();
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub?.unsubscribe();
+  }
+
+  private carregarDicas(): void {
+    this.translateService.get('home.tips.items').subscribe((items) => {
+      this.tips = Array.isArray(items) ? items : [];
+    });
   }
 
   private carregarUsuario(): void {
     const email = this.authService.getUser()?.email || this.authService.getUserName();
 
     if (!email) {
-      this.usuario = 'Colaborador';
+      this.usuario = this.translateService.instant('home.defaultUser');
       return;
     }
 
@@ -38,7 +55,7 @@ export class HomeComponent implements OnInit {
       },
       error: () => {
         this.usuario = email;
-        this.toastrService.error('Erro ao buscar dados do usuário');
+        this.toastrService.error(this.translateService.instant('home.errors.loadUser'));
       }
     });
   }

@@ -1,0 +1,158 @@
+{
+  "app": {
+    "name": "Smart Hospital",
+    "footer": "© 2025 Smart Hospital. All rights reserved.",
+    "language": {
+      "label": "Language",
+      "pt": "Portuguese",
+      "en": "English"
+    }
+  },
+  "nav": {
+    "menu": {
+      "home": "Home",
+      "users": "Users",
+      "changePassword": "Change password",
+      "logout": "Sign out"
+    },
+    "language": {
+      "title": "Language"
+    },
+    "toggleOpen": "Open menu",
+    "toggleClose": "Close menu",
+    "errors": {
+      "loadUser": "Failed to retrieve user information"
+    }
+  },
+  "login": {
+    "title": "Sign In",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailInvalid": "Invalid email",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot": "Forgot your password?",
+    "submit": "Sign in",
+    "signupQuestion": "Don't have an account yet?",
+    "signupLink": "Register",
+    "messages": {
+      "fillFields": "Please fill in the fields correctly",
+      "tokenError": "Unable to retrieve authentication token",
+      "invalidCredentials": "Invalid username or password"
+    }
+  },
+  "home": {
+    "welcome": "Welcome, {{name}}!",
+    "defaultUser": "Colleague",
+    "info": {
+      "title": "Smart Hospital",
+      "body": "Use the side menu to access the hospital's administrative resources, such as registering and managing users. New clinical features can be added on top of this foundation."
+    },
+    "tips": {
+      "title": "Next Steps",
+      "items": [
+        "Register staff members and set their access roles.",
+        "Configure integrations and workflows specific to your hospital.",
+        "Customize the layout with your institution's visual identity."
+      ]
+    },
+    "errors": {
+      "loadUser": "Failed to load user information"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "filters": {
+      "profile": "Role",
+      "search": "Search",
+      "button": "Filter"
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "profile": "Role",
+      "actions": "Actions"
+    },
+    "cards": {
+      "email": "Email",
+      "profile": "Role"
+    },
+    "buttons": {
+      "new": "New User"
+    },
+    "tooltips": {
+      "edit": "Edit user",
+      "changeRole": "Change role",
+      "delete": "Delete user"
+    },
+    "roles": {
+      "ADMIN": "Administrator",
+      "USER": "User"
+    },
+    "dialog": {
+      "createTitle": "CREATE USER",
+      "editTitle": "EDIT USER",
+      "updateProfile": "CHANGE ROLE",
+      "deleteTitle": "Delete User",
+      "deleteMessage": "Are you sure you want to delete user {{name}}?"
+    },
+    "messages": {
+      "created": "User created successfully!",
+      "createError": "Failed to create user.",
+      "updated": "User updated successfully!",
+      "updateError": "Failed to update user.",
+      "profileUpdated": "Role updated successfully!",
+      "profileError": "Failed to update role.",
+      "deleted": "User deleted successfully!",
+      "deleteError": "Failed to delete user."
+    }
+  },
+  "forms": {
+    "name": "Name",
+    "email": "Email",
+    "profile": "Role",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMax": "Name must have at most 150 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email",
+      "emailMax": "Email must have at most 120 characters",
+      "profileRequired": "Role is required",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 6 characters long",
+      "passwordConfirmRequired": "Password confirmation is required",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "info": {
+      "defaultPassword": "By default, new users receive the password <b>123456</b>. Please change it after the first login."
+    }
+  },
+  "auth": {
+    "errors": {
+      "changePassword": "Failed to change password.",
+      "fetchUser": "Failed to load user"
+    },
+    "messages": {
+      "passwordChanged": "Password changed successfully!",
+      "logout": "Successfully signed out"
+    },
+    "defaultUser": "User"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "all": "All"
+  },
+  "paginator": {
+    "itemsPerPage": "Items per page",
+    "nextPage": "Next page",
+    "previousPage": "Previous page",
+    "firstPage": "First page",
+    "lastPage": "Last page",
+    "range": "{{start}} – {{end}} of {{length}}",
+    "rangeZero": "0 of {{length}}"
+  }
+}

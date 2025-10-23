@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Credencial } from '../../models/credencial';
 import { AuthService } from '../../security/auth.service';
 import { HttpResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -21,19 +22,20 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private toast: ToastrService,
     private service: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(3)]]
+      senha: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   logar(): void {
     if (this.loginForm.invalid) {
-      this.toast.warning('Preencha os campos corretamente');
+      this.toast.warning(this.translate.instant('login.messages.fillFields'));
       return;
     }
 
@@ -54,11 +56,12 @@ export class LoginComponent implements OnInit {
 
           this.router.navigateByUrl('/', { replaceUrl: true });
         } else {
-          this.toast.error('Erro ao obter token de autenticação');
+          this.toast.error(this.translate.instant('login.messages.tokenError'));
         }
       },
       error: (err) => {
-        this.toast.error(err?.error?.message || 'Usuário e/ou senha inválidos');
+        const errorMessage = err?.error?.message || this.translate.instant('login.messages.invalidCredentials');
+        this.toast.error(errorMessage);
       }
     });
 

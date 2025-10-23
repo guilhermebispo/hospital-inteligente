@@ -1,51 +1,56 @@
 <div class="login-container">
   <div class="login-left">
-    <img src="/logo-white.png" alt="Hospital Inteligente">
-    <h2>HOSPITAL INTELIGENTE</h2>
+    <div class="login-brand">
+      <img src="/logo-white.png" alt="{{ 'app.name' | translate }}">
+      <h2>{{ 'app.name' | translate | uppercase }}</h2>
+    </div>
   </div>
 
   <div class="login-right">
     <mat-card class="login-card mat-elevation-z8">
-      <h3 class="title">Fazer Login</h3>
+      <h3 class="title">{{ 'login.title' | translate }}</h3>
 
       <form [formGroup]="loginForm" (ngSubmit)="logar()">
 
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="Digite seu e-mail" formControlName="email">
+          <mat-label>{{ 'login.email' | translate }}</mat-label>
+          <input matInput [placeholder]="'login.emailPlaceholder' | translate" formControlName="email">
           <mat-icon matSuffix>email</mat-icon>
           <mat-error *ngIf="email?.invalid && email?.touched">
-            E-mail inválido
+            {{ 'login.emailInvalid' | translate }}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Senha</mat-label>
+          <mat-label>{{ 'login.password' | translate }}</mat-label>
           <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
           <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
             <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
-          <mat-error *ngIf="senha?.invalid && senha?.touched">
-            Senha inválida
+          <mat-error *ngIf="senha?.hasError('required') && senha?.touched">
+            {{ 'forms.validation.passwordRequired' | translate }}
+          </mat-error>
+          <mat-error *ngIf="senha?.hasError('minlength') && senha?.touched">
+            {{ 'forms.validation.passwordMin' | translate }}
           </mat-error>
         </mat-form-field>
 
         <div class="options">
-          <mat-checkbox>Lembre-me</mat-checkbox>
-          <a class="forgot" href="#">Esqueceu sua senha?</a>
+          <mat-checkbox>{{ 'login.remember' | translate }}</mat-checkbox>
+          <a class="forgot" href="#">{{ 'login.forgot' | translate }}</a>
         </div>
 
         <button type="submit" [disabled]="!loginForm.valid" class="full-width" mat-raised-button>
-          ENTRAR
+          {{ 'login.submit' | translate | uppercase }}
         </button>
 
         <p class="signup-text">
-          Ainda não tem conta? <a href="#" class="signup-link">Cadastre-se</a>.
+          {{ 'login.signupQuestion' | translate }} <a href="#" class="signup-link">{{ 'login.signupLink' | translate }}</a>.
         </p>
       </form>
 
     </mat-card>
 
-    <p class="footer">© 2025 Hospital Inteligente. Todos os direitos reservados.</p>
+    <p class="footer">{{ 'app.footer' | translate }}</p>
   </div>
 </div>

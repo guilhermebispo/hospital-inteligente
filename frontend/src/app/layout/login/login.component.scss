@@ -1,50 +1,62 @@
 .login-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
 }
 
 .login-left {
-  flex: 2;
+  flex: 1.2;
   background-color: #013179;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
-  box-shadow: 8px 0 14px -4px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  box-shadow: 8px 0 14px -4px rgba(0, 0, 0, 0.35);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: min(500px, 95%);
 
   img {
-    width: 360px;
-    margin-top: -2.5rem;
+    width: clamp(140px, 20vw, 220px);
+    max-width: 40vw;
   }
 
   h2 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-top: -2rem;
+    font-size: clamp(1.6rem, 2.2vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
   }
 }
 
 .login-right {
-  flex: 3;
+  flex: 1.6;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(145deg, #f7f9fb 0%, #e2ebf5 100%);
 
   .login-card {
-    width: 430px;
-    padding: 2rem;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.30);
+    width: min(430px, 100%);
+    padding: clamp(1.5rem, 4vw, 2rem);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     border-top: 4px solid #5ecf01;
-    border-radius: 10px;
+    border-radius: 14px;
     background-color: #fff;
+    box-sizing: border-box;
 
     mat-form-field {
       display: block;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
     }
 
     .title {
@@ -52,6 +64,7 @@
       font-weight: 600;
       color: #013179;
       text-align: start;
+      font-size: 1.35rem;
     }
 
     .full-width {
@@ -62,8 +75,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: -0.5rem;
+      margin-top: -0.35rem;
       margin-bottom: 2rem;
+      gap: 1rem;
 
       .forgot {
         font-size: 0.9rem;
@@ -78,6 +92,7 @@
       font-weight: 600;
       color: #fff;
       background-color: #0a4297;
+      transition: background-color 0.3s, color 0.3s;
 
       &:hover:not(:disabled) {
         background-color: #083575;
@@ -88,9 +103,6 @@
         color: rgba(255, 255, 255, 0.6);
         cursor: not-allowed;
       }
-
-      transition: background-color 0.3s,
-      color 0.3s;
     }
 
     .signup-text {
@@ -110,14 +122,91 @@
         }
       }
     }
-
   }
 
   .footer {
     position: absolute;
-    bottom: 1rem;
+    bottom: 1.5rem;
     text-align: center;
     font-size: 0.8rem;
-    color: gray;
+    color: #637082;
+    width: min(90%, 360px);
+  }
+}
+
+@media (max-width: 992px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left {
+    flex: none;
+    width: 100%;
+    padding: 1.75rem 1.25rem 1.25rem;
+    box-shadow: none;
+    justify-content: flex-start;
+  }
+
+  .login-brand {
+    justify-content: flex-start;
+    gap: 1rem;
+
+    img {
+      width: clamp(120px, 22vw, 180px);
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 4.2vw, 1.6rem);
+    }
+  }
+
+  .login-right {
+    padding: 2rem 1.25rem 3rem;
+
+    .login-card {
+      width: min(450px, 100%);
+      padding: clamp(1.25rem, 6vw, 1.75rem);
+    }
+
+    .footer {
+      position: static;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .login-left {
+    padding: 1.25rem 1rem 0.75rem;
+    align-items: stretch;
+  }
+
+  .login-brand {
+    gap: 0.75rem;
+    align-items: center;
+
+    img {
+      width: clamp(90px, 18vw, 140px);
+    }
+
+    h2 {
+      font-size: clamp(1.05rem, 4vw, 1.35rem);
+      line-height: 1.2;
+    }
+  }
+
+  .login-right {
+    padding: 1.5rem 1rem 2.25rem;
+  }
+
+  .login-right .login-card {
+    border-radius: 12px;
+
+    .options {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
   }
 }

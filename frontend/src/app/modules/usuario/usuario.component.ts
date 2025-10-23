@@ -10,6 +10,7 @@ import { PerfilFormComponent } from './perfil-form/perfil-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dominio } from '../../models/dominio';
 import { DominioService } from '../../services/dominio.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-usuario',
@@ -35,7 +36,8 @@ export class UsuarioComponent implements OnInit {
     private toastrService: ToastrService,
     private dialogService: DialogService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -116,7 +118,7 @@ export class UsuarioComponent implements OnInit {
   cadastrarUsuario(): void {
     this.dialogService.openForm({
       formComponent: UsuarioFormComponent,
-      title: 'CADASTRAR USUÁRIO',
+      title: this.translateService.instant('users.dialog.createTitle'),
       resources: {
         perfisList: this.perfisList
       }
@@ -131,10 +133,10 @@ export class UsuarioComponent implements OnInit {
 
         this.usuarioService.criar(payload).subscribe({
           next: () => {
-            this.toastrService.success('Usuário cadastrado com sucesso!');
+            this.toastrService.success(this.translateService.instant('users.messages.created'));
             this.carregarUsuarios();
           },
-          error: () => this.toastrService.error('Erro ao cadastrar usuário.')
+          error: () => this.toastrService.error(this.translateService.instant('users.messages.createError'))
         });
       }
     });
@@ -143,16 +145,16 @@ export class UsuarioComponent implements OnInit {
   editarUsuario(usuario: Usuario): void {
     this.dialogService.openForm({
       formComponent: UsuarioFormComponent,
-      title: 'EDITAR USUÁRIO',
+      title: this.translateService.instant('users.dialog.editTitle'),
       value: usuario
     }).subscribe((result: any) => {
       if (result) {
         this.usuarioService.atualizar({ ...usuario, ...result }).subscribe({
           next: () => {
-            this.toastrService.success('Usuário atualizado com sucesso!');
+            this.toastrService.success(this.translateService.instant('users.messages.updated'));
             this.carregarUsuarios();
           },
-          error: () => this.toastrService.error('Erro ao atualizar usuário.')
+          error: () => this.toastrService.error(this.translateService.instant('users.messages.updateError'))
         });
       }
     });
@@ -161,7 +163,7 @@ export class UsuarioComponent implements OnInit {
   alterarPerfil(usuario: Usuario): void {
     this.dialogService.openForm({
       formComponent: PerfilFormComponent,
-      title: 'ALTERAR PERFIL',
+      title: this.translateService.instant('users.dialog.updateProfile'),
       value: usuario,
       resources: {
         perfisList: this.perfisList
@@ -170,10 +172,10 @@ export class UsuarioComponent implements OnInit {
       if (result?.perfil && result.perfil !== usuario.perfil) {
         this.usuarioService.atualizarPerfil(usuario.id!, result.perfil).subscribe({
           next: () => {
-            this.toastrService.success('Perfil atualizado com sucesso!');
+            this.toastrService.success(this.translateService.instant('users.messages.profileUpdated'));
             this.carregarUsuarios();
           },
-          error: () => this.toastrService.error('Erro ao atualizar perfil.')
+          error: () => this.toastrService.error(this.translateService.instant('users.messages.profileError'))
         });
       }
     });
@@ -181,16 +183,16 @@ export class UsuarioComponent implements OnInit {
 
   deletarUsuario(usuario: Usuario): void {
     this.dialogService.openConfirm({
-      title: 'Excluir Usuário',
-      message: `Tem certeza que deseja deletar o usuário ${usuario.nome}?`
+      title: this.translateService.instant('users.dialog.deleteTitle'),
+      message: this.translateService.instant('users.dialog.deleteMessage', { name: usuario.nome })
     }).subscribe(confirmado => {
       if (confirmado) {
         this.usuarioService.deletar(usuario.id!).subscribe({
           next: () => {
-            this.toastrService.success('Usuário excluído com sucesso!');
+            this.toastrService.success(this.translateService.instant('users.messages.deleted'));
             this.carregarUsuarios();
           },
-          error: err => this.toastrService.error('Erro ao excluir usuário.')
+          error: () => this.toastrService.error(this.translateService.instant('users.messages.deleteError'))
         });
       }
     });

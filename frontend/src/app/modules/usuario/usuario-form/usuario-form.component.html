@@ -2,46 +2,45 @@
   <form [formGroup]="form" class="form-fields">
 
     <mat-form-field appearance="outline">
-      <mat-label>Nome</mat-label>
+      <mat-label>{{ 'forms.name' | translate }}</mat-label>
       <input matInput formControlName="nome">
       <mat-error *ngIf="form.get('nome')?.hasError('required')">
-        O nome é obrigatório
+        {{ 'forms.validation.nameRequired' | translate }}
       </mat-error>
       <mat-error *ngIf="form.get('nome')?.hasError('maxlength')">
-        O nome deve ter no máximo 150 caracteres
+        {{ 'forms.validation.nameMax' | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>E-mail</mat-label>
+      <mat-label>{{ 'forms.email' | translate }}</mat-label>
       <input matInput formControlName="email">
       <mat-error *ngIf="form.get('email')?.hasError('required')">
-        O e-mail é obrigatório
+        {{ 'forms.validation.emailRequired' | translate }}
       </mat-error>
       <mat-error *ngIf="form.get('email')?.hasError('email')">
-        E-mail inválido
+        {{ 'forms.validation.emailInvalid' | translate }}
       </mat-error>
       <mat-error *ngIf="form.get('email')?.hasError('maxlength')">
-        O e-mail deve ter no máximo 120 caracteres
+        {{ 'forms.validation.emailMax' | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" *ngIf="!isEdit">
-      <mat-label>Perfil</mat-label>
+      <mat-label>{{ 'forms.profile' | translate }}</mat-label>
       <mat-select formControlName="perfil">
-        <mat-option *ngFor="let s of perfisList" [value]="s.code">{{ s.label }}</mat-option>
+        <mat-option *ngFor="let s of perfisList" [value]="s.code">
+          {{ ('users.roles.' + s.code) | translate }}
+        </mat-option>
       </mat-select>
       <mat-error *ngIf="form.get('perfil')?.hasError('required')">
-        O perfil é obrigatório
+        {{ 'forms.validation.profileRequired' | translate }}
       </mat-error>
     </mat-form-field>
 
     <div class="info-message" *ngIf="!isEdit">
       <mat-icon>info</mat-icon>
-      <span>
-        Por padrão, novos usuários terão a senha <b>123456</b>.
-        Por favor, altere após o primeiro acesso.
-      </span>
+      <span [innerHTML]="'forms.info.defaultPassword' | translate"></span>
     </div>
 
   </form>

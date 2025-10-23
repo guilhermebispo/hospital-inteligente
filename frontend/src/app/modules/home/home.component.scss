@@ -40,3 +40,18 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 0 1rem;
+
+    .info-card,
+    .tips-card {
+      padding: 1.25rem;
+    }
+
+    .welcome-title {
+      font-size: 1.6rem;
+    }
+  }
+}
