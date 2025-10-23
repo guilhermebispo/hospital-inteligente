@@ -8,7 +8,7 @@ from app.security.auth import require_roles
 
 router = APIRouter(prefix="/dominios", tags=["dominios"])
 
-read_permission = require_roles(PerfilEnum.ADMIN, PerfilEnum.USER)
+read_permission = require_roles(PerfilEnum.ADMIN, PerfilEnum.MEDICO, PerfilEnum.PACIENTE)
 
 
 def _to_dominio(enum_cls):

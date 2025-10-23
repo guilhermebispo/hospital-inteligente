@@ -20,6 +20,7 @@ export interface UsuarioParametro {
   page: number,
   size: number,
   sort?: string,
+  direction?: string,
   texto?: string,
   perfil?: string
 }

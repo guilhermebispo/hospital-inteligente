@@ -59,6 +59,7 @@ def list_usuarios(
     sort_attr = {
         "nome": Usuario.nome,
         "email": Usuario.email,
+        "perfil": Usuario.perfil,
         "dataCriacao": Usuario.data_criacao,
     }.get(sort_field, Usuario.nome)
 

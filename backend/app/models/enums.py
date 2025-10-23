@@ -5,11 +5,13 @@ from enum import Enum
 
 class PerfilEnum(str, Enum):
     ADMIN = "ADMIN"
-    USER = "USER"
+    MEDICO = "MEDICO"
+    PACIENTE = "PACIENTE"
 
     @property
     def label(self) -> str:
         return {
             PerfilEnum.ADMIN: "Administrador",
-            PerfilEnum.USER: "Usuário",
+            PerfilEnum.MEDICO: "Médico",
+            PerfilEnum.PACIENTE: "Paciente",
         }[self]

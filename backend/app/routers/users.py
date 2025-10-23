@@ -23,7 +23,7 @@ from app.utils.pagination import build_page
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-read_permission = require_roles(PerfilEnum.ADMIN, PerfilEnum.USER)
+read_permission = require_roles(PerfilEnum.ADMIN, PerfilEnum.MEDICO, PerfilEnum.PACIENTE)
 write_permission = require_roles(PerfilEnum.ADMIN)
 
 

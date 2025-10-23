@@ -27,7 +27,14 @@ export class UsuarioService {
       params = params.set('perfil', filtro.perfil);
     }
     if (filtro.sort && !filtro.sort.startsWith('undefined')) {
-      params = params.set('sort', filtro.sort);
+      const [field, dir] = filtro.sort.split(',');
+      params = params.set('sort', field);
+      const direction = filtro.direction || dir;
+      if (direction) {
+        params = params.set('direction', direction);
+      }
+    } else if (filtro.direction) {
+      params = params.set('direction', filtro.direction);
     }
 
     return this.http.get<RespostaPaginada<Usuario>>(API, { params });
@@ -50,11 +57,11 @@ export class UsuarioService {
   }
 
   atualizarPerfil(id: string, perfil: string): Observable<Usuario> {
-    return this.http.patch<Usuario>(`${API}/${id}/perfil`, perfil);
+    return this.http.patch<Usuario>(`${API}/${id}/perfil`, { perfil });
   }
 
   atualizarSenha(id: string, senha: string): Observable<Usuario> {
-    return this.http.patch<Usuario>(`${API}/${id}/senha`, senha);
+    return this.http.patch<Usuario>(`${API}/${id}/senha`, { senha });
   }
 
   deletar(id: string): Observable<Usuario> {

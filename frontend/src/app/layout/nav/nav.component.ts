@@ -26,6 +26,7 @@ interface LanguageOption {
 export class NavComponent implements OnInit, OnDestroy {
 
   usuario!: string;
+  usuarioId?: string;
   perfil!: string;
   role!: string;
   menuAberto = false;
@@ -59,6 +60,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
     this.usuarioService.buscarPorEmail(email).subscribe({
       next: (res: Usuario) => {
+        this.usuarioId = res.id;
         this.usuario = res.nome;
         this.perfil = res.perfil.code;
         this.perfilLabelPadrao = res.perfil.label;
@@ -87,13 +89,15 @@ export class NavComponent implements OnInit, OnDestroy {
       formComponent: SenhaFormComponent,
       title: this.translateService.instant('nav.menu.changePassword').toUpperCase(),
     }).subscribe((result: any) => {
-      if (result) {
-        this.usuarioService.atualizarSenha('', result.perfil).subscribe({
+      if (result?.senha && this.usuarioId) {
+        this.usuarioService.atualizarSenha(this.usuarioId, result.senha).subscribe({
           next: () => {
             this.toastrService.success(this.translateService.instant('auth.messages.passwordChanged'));
           },
           error: () => this.toastrService.error(this.translateService.instant('auth.errors.changePassword'))
         });
+      } else if (!this.usuarioId) {
+        this.toastrService.error(this.translateService.instant('auth.errors.fetchUser'));
       }
     });
   }

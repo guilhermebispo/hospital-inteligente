@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Smart Hospital",
-    "footer": "© 2025 Smart Hospital. All rights reserved.",
+    "name": "Intelligent Hospital",
+    "footer": "© 2025 Intelligent Hospital. All rights reserved.",
     "language": {
       "label": "Language",
       "pt-BR": "Portuguese (Brazil)",
@@ -45,7 +45,7 @@
     "welcome": "Welcome, {{name}}!",
     "defaultUser": "Colleague",
     "info": {
-      "title": "Smart Hospital",
+      "title": "Intelligent Hospital",
       "body": "Use the side menu to access the hospital's administrative resources, such as registering and managing users. New clinical features can be added on top of this foundation."
     },
     "tips": {
@@ -87,8 +87,8 @@
     },
     "roles": {
       "ADMIN": "Administrator",
-      "USER": "User",
-      "MEDICO": "Doctor"
+      "MEDICO": "Doctor",
+      "PACIENTE": "Patient"
     },
     "dialog": {
       "createTitle": "CREATE USER",

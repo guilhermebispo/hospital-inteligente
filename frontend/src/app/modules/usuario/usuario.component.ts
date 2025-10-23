@@ -53,12 +53,27 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
       this.filtroTexto = params.get('texto') || '';
       this.filtroPerfil = params.get('perfil') || '';
       const sortParam = params.get('sort');
+      const directionParam = params.get('direction');
       if (sortParam) {
-        const [active, direction] = sortParam.split(',');
-        this.sortState = {
-          active: active || '',
-          direction: direction === 'asc' || direction === 'desc' ? direction : ''
-        };
+        let active = sortParam;
+        let resolvedDirection = directionParam || '';
+
+        if (sortParam.includes(',')) {
+          const [field, parsedDirection] = sortParam.split(',');
+          active = field;
+          if (!resolvedDirection) {
+            resolvedDirection = parsedDirection;
+          }
+        }
+
+        const normalizedDirection =
+          resolvedDirection === 'asc' || resolvedDirection === 'desc'
+            ? resolvedDirection
+            : 'asc';
+
+        this.sortState = active
+          ? { active, direction: normalizedDirection }
+          : { active: '', direction: '' };
         this.applySortStateToDirective();
       } else {
         this.sortState = { active: '', direction: '' };
@@ -73,11 +88,13 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   }
 
   carregarUsuarios(): void {
-    const sortParam = this.getSortParam();
+    const sortField = this.getSortField();
+    const sortDirection = this.getSortDirection();
     this.usuarioService.listar({
       page: this.pageIndex,
       size: this.pageSize,
-      sort: sortParam,
+      sort: sortField,
+      direction: sortDirection,
       texto: this.filtroTexto,
       perfil: this.filtroPerfil
     }).subscribe(response => {
@@ -87,6 +104,8 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   }
 
   atualizarUrl() {
+    const sortField = this.getSortField();
+    const sortDirection = this.getSortDirection();
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
@@ -94,7 +113,8 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
         size: this.pageSize,
         texto: this.filtroTexto || null,
         perfil: this.filtroPerfil || null,
-        sort: this.getSortParam() ?? null
+        sort: sortField ?? null,
+        direction: sortDirection ?? null
       },
       queryParamsHandling: 'merge'
     });
@@ -206,10 +226,17 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private getSortParam(): string | undefined {
-    return this.sortState.active && this.sortState.direction
-      ? `${this.sortState.active},${this.sortState.direction}`
-      : undefined;
+  private getSortField(): string | undefined {
+    return this.sortState.active || undefined;
+  }
+
+  private getSortDirection(): string | undefined {
+    if (!this.sortState.active) {
+      return undefined;
+    }
+    return this.sortState.direction === 'asc' || this.sortState.direction === 'desc'
+      ? this.sortState.direction
+      : 'asc';
   }
 
   private applySortStateToDirective(): void {
@@ -222,14 +249,17 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   }
 
   private ensureMedicoPerfil(perfis: Dominio[]): Dominio[] {
-    const possuiMedico = perfis.some(perfil => perfil.code === 'MEDICO');
-    if (possuiMedico) {
-      return perfis;
+    const codes = new Set(perfis.map(perfil => perfil.code));
+    const result = [...perfis];
+
+    if (!codes.has('MEDICO')) {
+      result.push({ code: 'MEDICO', label: 'Médico' });
     }
 
-    return [
-      ...perfis,
-      { code: 'MEDICO', label: 'Médico' }
-    ];
+    if (!codes.has('PACIENTE')) {
+      result.push({ code: 'PACIENTE', label: 'Paciente' });
+    }
+
+    return result;
   }
 }

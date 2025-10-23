@@ -19,10 +19,10 @@
     </a>
 
     <div class="sidenav-footer">
+      <span class="footer-text">{{ 'app.footer' | translate }}</span>
       <button mat-icon-button class="language-button" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">
         <img class="language-flag" [src]="currentLanguageFlag" [alt]="('app.language.' + currentLanguage) | translate">
       </button>
-      <span>{{ 'app.footer' | translate }}</span>
     </div>
   </nav>
 
