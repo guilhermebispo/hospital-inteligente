@@ -27,17 +27,26 @@ read_permission = require_roles(RoleEnum.ADMIN, RoleEnum.DOCTOR, RoleEnum.PATIEN
 write_permission = require_roles(RoleEnum.ADMIN)
 
 
-@router.get("", response_model=PageResponse[UserOut])
+@router.get(
+    "",
+    response_model=PageResponse[UserOut],
+    summary="List users with pagination",
+    description=(
+        "Returns a page of users filtered by role or free text. "
+        "You may try the default admin `admin@hospital.com` to explore the listing."
+    ),
+)
 def list_users(
-    page: int = Query(0, ge=0),
-    size: int = Query(10, ge=1, le=100),
-    sort: str = Query("name"),
-    direction: str = Query("asc"),
-    role: Optional[str] = Query(None),
-    text: Optional[str] = Query(None),
+    page: int = Query(0, ge=0, description="Desired page (zero-based index)."),
+    size: int = Query(10, ge=1, le=100, description="Number of items per page."),
+    sort: str = Query("name", description="Field used to sort results."),
+    direction: str = Query("asc", description="Sort direction: asc or desc."),
+    role: Optional[str] = Query(None, description="Filter by role: ADMIN, DOCTOR, PATIENT."),
+    text: Optional[str] = Query(None, description="Free-text filter applied to name and e-mail."),
     db: Session = Depends(get_db),
     _: None = Depends(read_permission),
 ):
+    """Return paginated users applying optional filters."""
     items, total = user_service.list_users(
         db,
         page=page,
@@ -52,7 +61,15 @@ def list_users(
     return build_page(dtos, total=total, page=page, size=size)
 
 
-@router.get("/{user_id}", response_model=UserOut)
+@router.get(
+    "/{user_id}",
+    response_model=UserOut,
+    summary="Retrieve user by ID",
+    description="Fetch the full record of a user identified by UUID.",
+    responses={
+        404: {"description": "User not found."},
+    },
+)
 def get_by_id(
     user_id: UUID,
     db: Session = Depends(get_db),
@@ -66,7 +83,15 @@ def get_by_id(
     return UserOut.model_validate(user)
 
 
-@router.get("/email/{email}", response_model=UserOut)
+@router.get(
+    "/email/{email}",
+    response_model=UserOut,
+    summary="Retrieve user by e-mail",
+    description="Fetch a user by the exact e-mail registered in the system.",
+    responses={
+        404: {"description": "User not found for the provided e-mail."},
+    },
+)
 def get_by_email(
     email: str,
     db: Session = Depends(get_db),
@@ -80,7 +105,31 @@ def get_by_email(
     return UserOut.model_validate(user)
 
 
-@router.post("", response_model=UserOut)
+@router.post(
+    "",
+    response_model=UserOut,
+    summary="Create a new user",
+    description="Registers a new user (e.g., a new doctor) and returns the created record.",
+    responses={
+        200: {
+            "description": "User created successfully.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "id": "11111111-1111-1111-1111-111111111111",
+                        "name": "Hospital Administrator",
+                        "email": "admin@hospital.com",
+                        "password": "$2a$10$ps9xsYOBRI4dKG/be.RF4O4Ady0PvTSmjfKTFpXKykU4fIZWg8QhW",
+                        "role": {"code": "ADMIN", "label": "Administrator"},
+                        "createdAt": "2025-01-01T12:00:00Z",
+                    }
+                }
+            },
+        },
+        400: {"description": "Invalid payload."},
+        409: {"description": "E-mail already registered."},
+    },
+)
 def create(
     payload: UserCreate,
     db: Session = Depends(get_db),
@@ -96,7 +145,17 @@ def create(
     return UserOut.model_validate(user)
 
 
-@router.put("/{user_id}", response_model=UserOut)
+@router.put(
+    "/{user_id}",
+    response_model=UserOut,
+    summary="Update user",
+    description="Replaces the basic information (name and e-mail) of an existing user.",
+    responses={
+        400: {"description": "Invalid payload."},
+        404: {"description": "User not found."},
+        409: {"description": "E-mail already used by another user."},
+    },
+)
 def update(
     user_id: UUID,
     payload: UserUpdate,
@@ -115,7 +174,16 @@ def update(
     return UserOut.model_validate(user)
 
 
-@router.patch("/{user_id}/role", response_model=UserOut)
+@router.patch(
+    "/{user_id}/role",
+    response_model=UserOut,
+    summary="Change user role",
+    description="Updates only the access role of an existing user.",
+    responses={
+        400: {"description": "Provided role is invalid."},
+        404: {"description": "User not found."},
+    },
+)
 def change_role(
     user_id: UUID,
     payload: UserRoleUpdate,
@@ -132,7 +200,16 @@ def change_role(
     return UserOut.model_validate(user)
 
 
-@router.patch("/{user_id}/password", response_model=UserOut)
+@router.patch(
+    "/{user_id}/password",
+    response_model=UserOut,
+    summary="Change user password",
+    description="Replaces the current password with a new value. Useful after the first admin login.",
+    responses={
+        400: {"description": "Invalid password."},
+        404: {"description": "User not found."},
+    },
+)
 def change_password(
     user_id: UUID,
     payload: UserPasswordUpdate,
@@ -149,7 +226,16 @@ def change_password(
     return UserOut.model_validate(user)
 
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete user",
+    description="Permanently removes the user identified by UUID.",
+    responses={
+        204: {"description": "User removed successfully."},
+        404: {"description": "User not found."},
+    },
+)
 def delete(
     user_id: UUID,
     db: Session = Depends(get_db),

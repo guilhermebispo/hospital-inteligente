@@ -12,9 +12,16 @@ read_permission = require_roles(RoleEnum.ADMIN, RoleEnum.DOCTOR, RoleEnum.PATIEN
 
 
 def _to_domain(enum_cls):
+    """Convert an enum into a list of Domain objects."""
     return [Domain(code=item.value, label=item.label) for item in enum_cls]
 
 
-@router.get("/roles", response_model=list[Domain])
+@router.get(
+    "/roles",
+    response_model=list[Domain],
+    summary="List available roles",
+    description="Returns the complete set of roles accepted by the platform.",
+)
 def list_roles(_: None = Depends(read_permission)):
+    """Expose the RoleEnum values as code/label pairs."""
     return _to_domain(RoleEnum)
