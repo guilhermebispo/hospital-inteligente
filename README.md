@@ -107,3 +107,13 @@ Cada imagem recebe as tags:
 - `sha-<commit>`, permitindo versionamento imutável.
 
 O workflow usa o `GITHUB_TOKEN` padrão, portanto não exige secrets adicionais para publicar as imagens.
+
+### Rodando migrations via CI
+
+Ao final do build na branch `main`, o job `run-migrations` executa `backend/scripts/run_migrations.py`. Para habilitá-lo:
+
+1. Acesse as configurações do repositório em GitHub → *Settings* → *Secrets and variables* → *Actions*.
+2. Clique em **New repository secret**.
+3. Defina o nome `MIGRATIONS_DATABASE_URL`.
+4. Informe a string de conexão do banco (ex.: `postgresql+psycopg://usuario:senha@host:5432/banco`).
+5. Salve. A partir do próximo build em `main`, as migrations rodarão usando essa URL.
