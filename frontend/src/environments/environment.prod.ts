@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   // baseUrl: 'http://localhost:8080'
-  baseUrl: 'https://hospital-backend.onrender.com'
+  baseUrl: 'https://hospital-inteligente-backend.onrender.com'
 };
