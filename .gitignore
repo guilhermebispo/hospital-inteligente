@@ -26,3 +26,5 @@ replay_pid*
 # Database files
 db_data/
 .env
+.env.local
+.env.render
