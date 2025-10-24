@@ -1,59 +1,27 @@
-# Frontend
+# Hospital Inteligente – Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+Aplicação Angular 19 que provê a interface web do Hospital Inteligente, servida por Nginx em produção e empacotada automaticamente pelo GitHub Actions.
 
-## Development server
+## 📦 Imagem Docker
 
-To start a local development server, run:
+A imagem oficial está publicada no GitHub Container Registry.
 
-```bash
-ng serve
-```
+- **Repositório:** `ghcr.io/guilhermebispo/hospital-inteligente-frontend`
+- **Tags disponibilizadas:**
+  - `latest` → build mais recente da branch `main`
+  - `sha-<commit>` → build imutável vinculada a cada commit
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Como baixar
 
 ```bash
-ng generate component component-name
+docker pull ghcr.io/guilhermebispo/hospital-inteligente-frontend:latest
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Como executar
 
 ```bash
-ng generate --help
+docker run --rm -p 4200:80 \
+  ghcr.io/guilhermebispo/hospital-inteligente-frontend:latest
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+O Nginx expõe a aplicação em `http://localhost:4200`. A URL da API backend é definida nos arquivos de ambiente de Angular (`src/environments`). Para apontar para outra API, gere uma nova build ajustando `environment.ts`/`environment.prod.ts`.
