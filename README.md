@@ -95,3 +95,15 @@ Um usuário administrador é criado automaticamente na primeira execução:
 
 - **Usuário:** admin@hospital.com  
 - **Senha:** 123456
+
+---
+
+## 🐳 Imagens Docker & Deploy CI/CD
+
+Commits enviados para `main` (ou execuções manuais do workflow) disparam uma action que constrói e envia as imagens Docker do backend e do frontend para o GitHub Container Registry (`ghcr.io`).
+
+Cada imagem recebe as tags:
+- `latest`, apontando sempre para a build mais recente da branch `main`;
+- `sha-<commit>`, permitindo versionamento imutável.
+
+O workflow usa o `GITHUB_TOKEN` padrão, portanto não exige secrets adicionais para publicar as imagens.
