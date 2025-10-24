@@ -117,3 +117,11 @@ Ao final do build na branch `main`, o job `run-migrations` executa `backend/scri
 3. Defina o nome `MIGRATIONS_DATABASE_URL`.
 4. Informe a string de conexão do banco (ex.: `postgresql+psycopg://usuario:senha@host:5432/banco`).
 5. Salve. A partir do próximo build em `main`, as migrations rodarão usando essa URL.
+
+### Disparando deploys no Render
+
+Se você utilizar Deploy Hooks do Render, o workflow também consegue chamar esses endpoints ao final da pipeline:
+
+1. Crie os secrets `RENDER_BACKEND_DEPLOY_HOOK_URL` e/ou `RENDER_FRONTEND_DEPLOY_HOOK_URL` seguindo o mesmo caminho (*Settings → Secrets and variables → Actions* → **New repository secret**).
+2. Em cada secret, informe o URL privado fornecido pelo Render para disparar o deploy do respectivo serviço.
+3. Com os secrets configurados, o job `trigger-deploy-hooks` chamará cada hook (quando presente) após a conclusão do build e das migrations na branch `main`.
