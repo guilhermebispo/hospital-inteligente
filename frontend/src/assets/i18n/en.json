@@ -12,8 +12,13 @@
     "menu": {
       "home": "Home",
       "users": "Users",
+      "patients": "Patients",
       "changePassword": "Change password",
       "logout": "Sign out"
+    },
+    "sections": {
+      "dashboard": "Dashboard",
+      "management": "Management"
     },
     "language": {
       "title": "Language"
@@ -108,9 +113,64 @@
       "deleteError": "Failed to delete user."
     }
   },
+  "patients": {
+    "title": "Patients",
+    "filters": {
+      "gender": "Gender",
+      "search": "Search",
+      "button": "Filter"
+    },
+    "table": {
+      "name": "Name",
+      "document": "Document",
+      "email": "Email",
+      "birthDate": "Birth date",
+      "gender": "Gender",
+      "actions": "Actions"
+    },
+    "cards": {
+      "email": "Email",
+      "document": "Document",
+      "gender": "Gender"
+    },
+    "buttons": {
+      "new": "New Patient"
+    },
+    "tooltips": {
+      "edit": "Edit patient",
+      "delete": "Delete patient",
+      "createUser": "Create user"
+    },
+    "dialog": {
+      "createTitle": "CREATE PATIENT",
+      "editTitle": "EDIT PATIENT",
+      "deleteTitle": "Delete Patient",
+      "deleteMessage": "Are you sure you want to delete patient {{name}}?"
+    },
+    "messages": {
+      "created": "Patient created successfully!",
+      "createError": "Failed to create patient.",
+      "updated": "Patient updated successfully!",
+      "updateError": "Failed to update patient.",
+      "deleted": "Patient deleted successfully!",
+      "deleteError": "Failed to delete patient.",
+      "userCreated": "User created successfully!",
+      "userError": "Unable to create a user for this patient."
+    },
+    "gender": {
+      "FEMALE": "Female",
+      "MALE": "Male",
+      "OTHER": "Other / Not informed"
+    }
+  },
   "forms": {
     "name": "Name",
     "email": "Email",
+    "document": "Document",
+    "birthDate": "Birth date",
+    "gender": "Gender",
+    "phone": "Phone",
+    "notes": "Notes",
     "profile": "Role",
     "password": "Password",
     "confirmPassword": "Confirm password",
@@ -120,6 +180,12 @@
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email",
       "emailMax": "Email must have at most 120 characters",
+      "documentRequired": "Document is required",
+      "documentMax": "Document must have at most 20 characters",
+      "birthDateRequired": "Birth date is required",
+      "genderRequired": "Gender is required",
+      "phoneMax": "Phone must have at most 20 characters",
+      "notesMax": "Notes must have at most 500 characters",
       "profileRequired": "Role is required",
       "passwordRequired": "Password is required",
       "passwordMin": "Password must be at least 6 characters long",

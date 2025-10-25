@@ -15,3 +15,17 @@ class RoleEnum(str, Enum):
             RoleEnum.DOCTOR: "Doctor",
             RoleEnum.PATIENT: "Patient",
         }[self]
+
+
+class GenderEnum(str, Enum):
+    FEMALE = "FEMALE"
+    MALE = "MALE"
+    OTHER = "OTHER"
+
+    @property
+    def label(self) -> str:
+        return {
+            GenderEnum.FEMALE: "Female",
+            GenderEnum.MALE: "Male",
+            GenderEnum.OTHER: "Other / Not Informed",
+        }[self]

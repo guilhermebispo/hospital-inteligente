@@ -12,8 +12,13 @@
     "menu": {
       "home": "Home",
       "users": "Usuários",
+      "patients": "Pacientes",
       "changePassword": "Alterar senha",
       "logout": "Sair"
+    },
+    "sections": {
+      "dashboard": "Painel",
+      "management": "Gestão"
     },
     "language": {
       "title": "Idioma"
@@ -108,9 +113,64 @@
       "deleteError": "Erro ao excluir usuário."
     }
   },
+  "patients": {
+    "title": "Pacientes",
+    "filters": {
+      "gender": "Gênero",
+      "search": "Buscar",
+      "button": "Filtrar"
+    },
+    "table": {
+      "name": "Nome",
+      "document": "Documento",
+      "email": "E-mail",
+      "birthDate": "Nascimento",
+      "gender": "Gênero",
+      "actions": "Ações"
+    },
+    "cards": {
+      "email": "E-mail",
+      "document": "Documento",
+      "gender": "Gênero"
+    },
+    "buttons": {
+      "new": "Novo Paciente"
+    },
+    "tooltips": {
+      "edit": "Editar paciente",
+      "delete": "Excluir paciente",
+      "createUser": "Criar usuário"
+    },
+    "dialog": {
+      "createTitle": "CADASTRAR PACIENTE",
+      "editTitle": "EDITAR PACIENTE",
+      "deleteTitle": "Excluir Paciente",
+      "deleteMessage": "Tem certeza que deseja excluir o paciente {{name}}?"
+    },
+    "messages": {
+      "created": "Paciente cadastrado com sucesso!",
+      "createError": "Erro ao cadastrar paciente.",
+      "updated": "Paciente atualizado com sucesso!",
+      "updateError": "Erro ao atualizar paciente.",
+      "deleted": "Paciente excluído com sucesso!",
+      "deleteError": "Erro ao excluir paciente.",
+      "userCreated": "Usuário criado com sucesso!",
+      "userError": "Não foi possível criar o usuário para este paciente."
+    },
+    "gender": {
+      "FEMALE": "Feminino",
+      "MALE": "Masculino",
+      "OTHER": "Outro / Não informado"
+    }
+  },
   "forms": {
     "name": "Nome",
     "email": "E-mail",
+    "document": "Documento",
+    "birthDate": "Data de nascimento",
+    "gender": "Gênero",
+    "phone": "Telefone",
+    "notes": "Observações",
     "profile": "Perfil",
     "password": "Senha",
     "confirmPassword": "Confirmar Senha",
@@ -120,6 +180,12 @@
       "emailRequired": "O e-mail é obrigatório",
       "emailInvalid": "E-mail inválido",
       "emailMax": "O e-mail deve ter no máximo 120 caracteres",
+      "documentRequired": "O documento é obrigatório",
+      "documentMax": "O documento deve ter no máximo 20 caracteres",
+      "birthDateRequired": "A data de nascimento é obrigatória",
+      "genderRequired": "O gênero é obrigatório",
+      "phoneMax": "O telefone deve ter no máximo 20 caracteres",
+      "notesMax": "As observações devem ter no máximo 500 caracteres",
       "profileRequired": "O perfil é obrigatório",
       "passwordRequired": "A senha é obrigatória",
       "passwordMin": "A senha deve ter pelo menos 6 caracteres",

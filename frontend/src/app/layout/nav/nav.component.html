@@ -9,14 +9,20 @@
         <span class="mobile-user__role">{{ userRoleLabel }}</span>
       </div>
     </div>
-    <a routerLink="home" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
-      <mat-icon>home</mat-icon>
-      <span>{{ 'nav.menu.home' | translate }}</span>
-    </a>
-    <a routerLink="users" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode == 'ADMIN'" (click)="closeMenu()">
-      <mat-icon>person</mat-icon>
-      <span>{{ 'nav.menu.users' | translate }}</span>
-    </a>
+    <div class="nav-menu">
+      <a routerLink="home" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
+        <mat-icon>home</mat-icon>
+        <span>{{ 'nav.menu.home' | translate }}</span>
+      </a>
+      <a routerLink="patients" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode === 'ADMIN' || userRoleCode === 'DOCTOR'" (click)="closeMenu()">
+        <mat-icon>groups</mat-icon>
+        <span>{{ 'nav.menu.patients' | translate }}</span>
+      </a>
+      <a routerLink="users" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode === 'ADMIN'" (click)="closeMenu()">
+        <mat-icon>person</mat-icon>
+        <span>{{ 'nav.menu.users' | translate }}</span>
+      </a>
+    </div>
 
     <div class="sidenav-footer">
       <button mat-icon-button class="language-button" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'app.language.label' | translate">

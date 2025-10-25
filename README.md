@@ -13,6 +13,9 @@ novos módulos clínicos e operacionais.
 O frontend oferece internacionalização com suporte a **Português** e **Inglês** – o idioma pode ser
 alternado pelo menu superior da aplicação.
 
+Esta versão também traz um módulo de **Pacientes**, permitindo CRUD completo e filtros por gênero
+para consultas rápidas diretamente na API.
+
 ---
 
 ## 🚀 Tecnologias
@@ -86,6 +89,9 @@ npm start
 - **Backend:** http://localhost:8080  
 - **Swagger UI:** http://localhost:8080/swagger-ui  
 - **Banco de Dados:** postgres://localhost:5434/hospital_db  
+- **Pacientes:** `GET /patients`, `POST /patients`, `PUT /patients/{id}`, `DELETE /patients/{id}`  
+- **Pacotes extras:** `POST /patients/{id}/create-user` (gera acesso de portal para o paciente)
+- **Domínios:** `GET /domains/roles` e `GET /domains/genders`
 
 ---
 

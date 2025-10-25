@@ -16,4 +16,8 @@ export class DomainService {
   fetchRoles(): Observable<Domain[]> {
     return this.http.get<Domain[]>(`${API}/roles`);
   }
+
+  fetchGenders(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(`${API}/genders`);
+  }
 }

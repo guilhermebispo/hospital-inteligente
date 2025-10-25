@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.error_handlers import register_exception_handlers
 from app.middleware import CorrelationIdMiddleware
-from app.routers import auth, domains, health, users
+from app.routers import auth, domains, health, patients, users
 
 
 def create_app() -> FastAPI:
@@ -31,6 +31,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router, prefix=prefix)
     app.include_router(auth.router, prefix=prefix)
     app.include_router(users.router, prefix=prefix)
+    app.include_router(patients.router, prefix=prefix)
     app.include_router(domains.router, prefix=prefix)
 
     register_exception_handlers(app)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from app.models.enums import RoleEnum
+from app.models.enums import GenderEnum, RoleEnum
 from app.schemas.common import Domain
 from app.security.auth import require_roles
 
@@ -25,3 +25,14 @@ def _to_domain(enum_cls):
 def list_roles(_: None = Depends(read_permission)):
     """Expose the RoleEnum values as code/label pairs."""
     return _to_domain(RoleEnum)
+
+
+@router.get(
+    "/genders",
+    response_model=list[Domain],
+    summary="List available genders",
+    description="Returns all gender values accepted when registering patients.",
+)
+def list_genders(_: None = Depends(read_permission)):
+    """Expose GenderEnum to populate dropdowns."""
+    return _to_domain(GenderEnum)
