@@ -1,4 +1,5 @@
 # Use a Node.js release that satisfies Angular 19's engine requirement
+
 FROM node:20.11.1 AS build
 WORKDIR /app
 COPY package*.json ./
@@ -6,7 +7,9 @@ COPY package*.json ./
 RUN npm ci --silent
 COPY . .
 
-RUN npm run build -- --configuration docker
+# Allow build config override (default: docker)
+ARG BUILD_CONFIG=docker
+RUN npm run build -- --configuration $BUILD_CONFIG
 
 FROM nginx:alpine
 

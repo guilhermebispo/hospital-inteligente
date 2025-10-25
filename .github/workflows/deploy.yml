@@ -62,6 +62,8 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_CONFIG=${{ matrix.suffix == 'frontend' && 'production' || 'docker' }}
 
   run-migrations:
     name: Run database migrations
