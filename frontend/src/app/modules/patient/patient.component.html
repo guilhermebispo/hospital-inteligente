@@ -95,9 +95,13 @@
           <span class="patient-card__label">{{ 'patients.cards.document' | translate }}</span>
           <span class="patient-card__value">{{ patient.document }}</span>
         </div>
-        <div class="patient-card__item">
+        <div class="patient-card__item patient-card__item--desktop">
           <span class="patient-card__label">{{ 'patients.cards.gender' | translate }}</span>
           <span class="patient-card__value">{{ ('patients.gender.' + getGenderCode(patient)) | translate }}</span>
+        </div>
+        <div class="patient-card__item patient-card__item--mobile">
+          <span class="patient-card__label">{{ 'patients.table.birthDate' | translate }}</span>
+          <span class="patient-card__value">{{ formatBirthDate(patient.birthDate) }}</span>
         </div>
       </div>
     </mat-card>

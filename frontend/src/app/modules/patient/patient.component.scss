@@ -104,6 +104,10 @@
       word-break: break-word;
     }
 
+    &__item--mobile {
+      display: none;
+    }
+
     &__actions {
       display: flex;
       align-items: center;
@@ -162,12 +166,28 @@
       display: flex;
       flex-direction: column;
     }
+
+    .patient-card__item--desktop {
+      display: none;
+    }
+
+    .patient-card__item--mobile {
+      display: flex;
+    }
   }
 
   .patient-container mat-paginator {
     margin-top: 0.75rem;
     width: 100%;
     border-radius: 12px;
+  }
+
+  .patient-card__item--desktop {
+    display: none;
+  }
+
+  .patient-card__item--mobile {
+    display: flex;
   }
 
   .new-patient-btn {
