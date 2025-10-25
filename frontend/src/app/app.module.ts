@@ -36,6 +36,8 @@ import { UserFormComponent } from './modules/user/user-form/user-form.component'
 import { UserComponent } from './modules/user/user.component';
 import { PatientComponent } from './modules/patient/patient.component';
 import { PatientFormComponent } from './modules/patient/patient-form/patient-form.component';
+import { DoctorComponent } from './modules/doctor/doctor.component';
+import { DoctorFormComponent } from './modules/doctor/doctor-form/doctor-form.component';
 import { AuthInterceptorProvider } from './security/auth.interceptor';
 import { DialogFormComponent } from './layout/dialog/form-dialog/dialog-form.component';
 import { DialogConfirmComponent } from './layout/dialog/confirm-dialog/dialog-confirm.component';
@@ -51,8 +53,10 @@ import { RoleFormComponent } from './modules/user/role-form/role-form.component'
     LoginComponent,
     UserComponent,
     PatientComponent,
+    DoctorComponent,
     UserFormComponent,
     PatientFormComponent,
+    DoctorFormComponent,
     RoleFormComponent,
     PasswordFormComponent,
     DialogFormComponent,

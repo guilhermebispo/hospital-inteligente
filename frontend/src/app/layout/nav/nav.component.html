@@ -18,6 +18,10 @@
         <mat-icon>groups</mat-icon>
         <span>{{ 'nav.menu.patients' | translate }}</span>
       </a>
+      <a routerLink="doctors" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode === 'ADMIN'" (click)="closeMenu()">
+        <mat-icon>medical_services</mat-icon>
+        <span>{{ 'nav.menu.doctors' | translate }}</span>
+      </a>
       <a routerLink="users" routerLinkActive="active" class="nav-link" *ngIf="userRoleCode === 'ADMIN'" (click)="closeMenu()">
         <mat-icon>person</mat-icon>
         <span>{{ 'nav.menu.users' | translate }}</span>

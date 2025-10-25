@@ -1,0 +1,31 @@
+<form [formGroup]="form" class="doctor-form">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'forms.name' | translate }}</mat-label>
+    <input matInput formControlName="name">
+    <mat-error *ngIf="form.get('name')?.hasError('required')">{{ 'forms.validation.nameRequired' | translate }}</mat-error>
+    <mat-error *ngIf="form.get('name')?.hasError('maxlength')">{{ 'forms.validation.nameMax' | translate }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'forms.email' | translate }}</mat-label>
+    <input matInput formControlName="email">
+    <mat-error *ngIf="form.get('email')?.hasError('required')">{{ 'forms.validation.emailRequired' | translate }}</mat-error>
+    <mat-error *ngIf="form.get('email')?.hasError('email')">{{ 'forms.validation.emailInvalid' | translate }}</mat-error>
+    <mat-error *ngIf="form.get('email')?.hasError('maxlength')">{{ 'forms.validation.emailMax' | translate }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'doctors.table.crm' | translate }}</mat-label>
+    <input matInput formControlName="crm">
+    <mat-error *ngIf="form.get('crm')?.hasError('required')">{{ 'doctors.validation.crmRequired' | translate }}</mat-error>
+    <mat-error *ngIf="form.get('crm')?.hasError('maxlength')">{{ 'doctors.validation.crmMax' | translate }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'doctors.table.specialty' | translate }}</mat-label>
+    <mat-select formControlName="specialty">
+      <mat-option *ngFor="let spec of specialties" [value]="spec">{{ spec }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('specialty')?.hasError('required')">{{ 'doctors.validation.specialtyRequired' | translate }}</mat-error>
+  </mat-form-field>
+</form>

@@ -90,6 +90,7 @@ npm start
 - **Swagger UI:** http://localhost:8080/swagger-ui  
 - **Banco de Dados:** postgres://localhost:5434/hospital_db  
 - **Pacientes:** `GET /patients`, `POST /patients`, `PUT /patients/{id}`, `DELETE /patients/{id}`  
+- **Médicos:** `GET /doctors`, `POST /doctors`, `PUT /doctors/{id}`, `DELETE /doctors/{id}`  
 - **Pacotes extras:** `POST /patients/{id}/create-user` (gera acesso de portal para o paciente)
 - **Domínios:** `GET /domains/roles` e `GET /domains/genders`
 

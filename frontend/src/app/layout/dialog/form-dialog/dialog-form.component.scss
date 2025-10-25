@@ -1,7 +1,17 @@
 .dialog-title {
   font-size: 18px;
   font-weight: 500;
-  margin-left: 10px;
+  /* Add bottom spacing so the first form-field label isn't flush with the title */
+  margin: 0 0 12px 10px;
+}
+
+.mat-mdc-dialog-content,
+mat-dialog-content {
+  /* Prevent floating labels from being clipped under the title */
+  padding-top: 12px;
+  /* Keep vertical scrolling if needed, but avoid horizontal clipping of floating labels */
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 .save-button {

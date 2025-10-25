@@ -1,0 +1,7 @@
+.doctor-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  /* Give some breathing room so floating labels don't touch the dialog title */
+  padding-top: 8px;
+}

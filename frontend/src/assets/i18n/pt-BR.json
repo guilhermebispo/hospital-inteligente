@@ -13,6 +13,7 @@
       "home": "Home",
       "users": "Usuários",
       "patients": "Pacientes",
+      "doctors": "Médicos",
       "changePassword": "Alterar senha",
       "logout": "Sair"
     },
@@ -161,6 +162,47 @@
       "FEMALE": "Feminino",
       "MALE": "Masculino",
       "OTHER": "Outro / Não informado"
+    }
+  },
+  "doctors": {
+    "title": "Médicos",
+    "filters": {
+      "specialty": "Especialidade",
+      "search": "Buscar",
+      "button": "Filtrar"
+    },
+    "table": {
+      "name": "Nome",
+      "email": "E-mail",
+      "crm": "CRM",
+      "specialty": "Especialidade",
+      "actions": "Ações"
+    },
+    "buttons": {
+      "new": "Novo Médico"
+    },
+    "tooltips": {
+      "edit": "Editar médico",
+      "delete": "Excluir médico"
+    },
+    "dialog": {
+      "createTitle": "CADASTRAR MÉDICO",
+      "editTitle": "EDITAR MÉDICO",
+      "deleteTitle": "Excluir Médico",
+      "deleteMessage": "Tem certeza que deseja excluir o médico {{name}}?"
+    },
+    "messages": {
+      "created": "Médico cadastrado com sucesso!",
+      "createError": "Erro ao cadastrar médico.",
+      "updated": "Médico atualizado com sucesso!",
+      "updateError": "Erro ao atualizar médico.",
+      "deleted": "Médico excluído com sucesso!",
+      "deleteError": "Erro ao excluir médico."
+    },
+    "validation": {
+      "crmRequired": "CRM é obrigatório",
+      "crmMax": "CRM deve ter no máximo 30 caracteres",
+      "specialtyRequired": "Especialidade é obrigatória"
     }
   },
   "forms": {

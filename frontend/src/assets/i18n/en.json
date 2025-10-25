@@ -13,6 +13,7 @@
       "home": "Home",
       "users": "Users",
       "patients": "Patients",
+      "doctors": "Doctors",
       "changePassword": "Change password",
       "logout": "Sign out"
     },
@@ -161,6 +162,47 @@
       "FEMALE": "Female",
       "MALE": "Male",
       "OTHER": "Other / Not informed"
+    }
+  },
+  "doctors": {
+    "title": "Doctors",
+    "filters": {
+      "specialty": "Specialty",
+      "search": "Search",
+      "button": "Filter"
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "crm": "CRM",
+      "specialty": "Specialty",
+      "actions": "Actions"
+    },
+    "buttons": {
+      "new": "New Doctor"
+    },
+    "tooltips": {
+      "edit": "Edit doctor",
+      "delete": "Delete doctor"
+    },
+    "dialog": {
+      "createTitle": "CREATE DOCTOR",
+      "editTitle": "EDIT DOCTOR",
+      "deleteTitle": "Delete Doctor",
+      "deleteMessage": "Are you sure you want to delete doctor {{name}}?"
+    },
+    "messages": {
+      "created": "Doctor created successfully!",
+      "createError": "Failed to create doctor.",
+      "updated": "Doctor updated successfully!",
+      "updateError": "Failed to update doctor.",
+      "deleted": "Doctor deleted successfully!",
+      "deleteError": "Failed to delete doctor."
+    },
+    "validation": {
+      "crmRequired": "CRM is required",
+      "crmMax": "CRM must have at most 30 characters",
+      "specialtyRequired": "Specialty is required"
     }
   },
   "forms": {
